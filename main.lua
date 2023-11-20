@@ -1,15 +1,21 @@
 require "src.dependencies"
 
 function love.load()
+    State = StateManager {
+        ["start"] = function() return StartState() end,
+    }
 
+    State:change("start")
 end
 
 function love.update(dt)
+    State:update(dt)
     App:update()
 end
 
 function love.draw()
     Push:start()
+    State:draw()
     Push:finish()
 end
 
