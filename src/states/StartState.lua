@@ -9,7 +9,7 @@ function StartState:update(dt)
 end
 
 function StartState:draw()
-    love.graphics.print("jhelrjhvfa", 50, 50)
+
 end
 
 function StartState:enter(params)
