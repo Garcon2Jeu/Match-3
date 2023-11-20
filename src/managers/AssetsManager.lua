@@ -35,4 +35,11 @@ function AssetsManager.getFonts()
     }
 end
 
+function AssetsManager:drawBackground()
+    love.graphics.draw(self.graphics["background"], 0, 0, 0,
+        VIRTUAL_WIDTH / (self.graphics["background"]:getWidth() - 1),
+        VIRTUAL_HEIGHT / (self.graphics["background"]:getHeight() - 1)
+    )
+end
+
 return AssetsManager()
