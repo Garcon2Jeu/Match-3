@@ -4,6 +4,7 @@ function AssetsManager:init()
     self.graphics = self.getGraphics()
     self.audio    = self.getAudio()
     self.fonts    = self.getFonts()
+    self.colors   = self.getColors()
 end
 
 function AssetsManager.getGraphics()
@@ -28,10 +29,24 @@ function AssetsManager.getAudio()
 end
 
 function AssetsManager.getFonts()
-    local font = love.graphics.newFont("assets/fonts/font.ttf")
+    local small = love.graphics.newFont("assets/fonts/font.ttf", 8)
+    local medium = love.graphics.newFont("assets/fonts/font.ttf", 16)
+    local large = love.graphics.newFont("assets/fonts/font.ttf", 32)
+    local huge = love.graphics.newFont("assets/fonts/font.ttf", 64)
 
     return {
-        ["setFont"] = function() love.graphics.setFont(font) end,
+        setSmall  = function() love.graphics.setFont(small) end,
+        setMedium = function() love.graphics.setFont(medium) end,
+        setLarge  = function() love.graphics.setFont(large) end,
+        setHuge   = function() love.graphics.setFont(huge) end,
+    }
+end
+
+function AssetsManager.getColors()
+    return {
+        reset = function() love.graphics.setColor(1, 1, 1, 1) end,
+        setWhiteTransparent = function() love.graphics.setColor(1, 1, 1, .5) end,
+        setBlack = function() love.graphics.setColor(0, 0, 0, 1) end,
     }
 end
 
