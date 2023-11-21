@@ -43,10 +43,29 @@ function AssetsManager.getFonts()
 end
 
 function AssetsManager.getColors()
+    local palette = AssetsManager:getPallette()
     return {
-        reset = function() love.graphics.setColor(1, 1, 1, 1) end,
+        reset               = function() love.graphics.setColor(1, 1, 1, 1) end,
         setWhiteTransparent = function() love.graphics.setColor(1, 1, 1, .5) end,
-        setBlack = function() love.graphics.setColor(0, 0, 0, 1) end,
+        setBlack            = function() love.graphics.setColor(0, 0, 0, 1) end,
+        setRed              = function() love.graphics.setColor(palette[1]) end,
+        setBlue             = function() love.graphics.setColor(palette[2]) end,
+        setYellow           = function() love.graphics.setColor(palette[3]) end,
+        setPurple           = function() love.graphics.setColor(palette[4]) end,
+        setGreen            = function() love.graphics.setColor(palette[5]) end,
+        setOrange           = function() love.graphics.setColor(palette[6]) end,
+        setDarkBlue         = function() love.graphics.setColor(48 / 255, 96 / 255, 130 / 255, 1) end,
+    }
+end
+
+function AssetsManager.getPallette()
+    return {
+        [1] = { 217 / 255, 87 / 255, 99 / 255, 1 },
+        [2] = { 95 / 255, 205 / 255, 228 / 255, 1 },
+        [3] = { 251 / 255, 242 / 255, 54 / 255, 1 },
+        [4] = { 118 / 255, 66 / 255, 138 / 255, 1 },
+        [5] = { 153 / 255, 229 / 255, 80 / 255, 1 },
+        [6] = { 223 / 255, 113 / 255, 38 / 255, 1 }
     }
 end
 
