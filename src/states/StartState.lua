@@ -27,12 +27,16 @@ function StartState:update(dt)
     end
 
     if highlighted then
-        Timer.tween(.25, {
-            [self] = { alphaTransition = 1 }
-        }):finish(function()
-            State:change("start")
-        end)
-
+        Chain(
+            function(next)
+                Timer.tween(.25, {
+                    [self] = { alphaTransition = 1 }
+                }):finish(next)
+            end,
+            function()
+                State:change("newGame")
+            end
+        )()
         self.colorTimer:remove()
     else
         love.event.quit()
@@ -62,7 +66,7 @@ end
 
 function StartState:drawTitleCard()
     -- Container
-    Assets.colors.setWhiteTransparent()
+    Assets.colors.setWhite(.5)
     love.graphics.rectangle("fill", CENTER_WIDTH - 150, CENTER_HEIGHT - 80, 300, 60, 4)
 
     Assets.fonts.setHuge()
@@ -98,7 +102,7 @@ end
 
 function StartState.drawMenuCard()
     -- Container
-    Assets.colors.setWhiteTransparent()
+    Assets.colors.setWhite(.5)
     love.graphics.rectangle("fill", CENTER_WIDTH - 75, CENTER_HEIGHT + 20, 150, 80, 4)
 
 

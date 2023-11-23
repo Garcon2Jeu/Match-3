@@ -3,6 +3,8 @@ require "src.dependencies"
 function love.load()
     State = StateManager {
         ["start"] = function() return StartState() end,
+        ["newGame"] = function() return NewGameState() end,
+
     }
 
     State:change("start")
