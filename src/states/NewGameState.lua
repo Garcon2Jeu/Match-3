@@ -20,7 +20,7 @@ function NewGameState:init()
         self:slideLevelCard(VIRTUAL_HEIGHT),
 
         function()
-            State:change("start")
+            State:change("play")
         end
     )()
 end

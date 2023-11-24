@@ -4,7 +4,7 @@ function love.load()
     State = StateManager {
         ["start"] = function() return StartState() end,
         ["newGame"] = function() return NewGameState() end,
-
+        ["play"] = function() return PlayState() end,
     }
 
     State:change("start")
