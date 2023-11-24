@@ -1,33 +1,27 @@
 NewGameState = Class { __includes = BaseState }
 
+local slideTime = .25
+local slidePause = 1.5
+
 function NewGameState:init()
-    self.alphaTransition = 1
     self.levelCardY = -100
 
     Chain(
-        function(next)
-            Timer.tween(.25, {
-                [self] = { alphaTransition = 0 }
-            }):finish(next)
-        end,
-
+        State:fade(0),
         self:slideLevelCard(CENTER_HEIGHT - 50),
 
         function(next)
-            Timer.after(1.5, next)
+            Timer.after(slidePause, next)
         end,
 
         self:slideLevelCard(VIRTUAL_HEIGHT),
-
-        function()
-            State:change("play")
-        end
+        State:chainChange("play")
     )()
 end
 
 function NewGameState:slideLevelCard(targetY)
     return function(next)
-        Timer.tween(.5, {
+        Timer.tween(slideTime, {
             [self] = { levelCardY = targetY }
         }):finish(next)
     end
@@ -38,10 +32,6 @@ function NewGameState:update(dt)
 end
 
 function NewGameState:draw()
-    love.graphics.setColor(1, 1, 1, self.alphaTransition)
-    love.graphics.rectangle("fill", 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
-    Assets.colors.reset()
-
     Assets.colors.setPurple(.5)
     love.graphics.rectangle("fill", 0, self.levelCardY, VIRTUAL_WIDTH, 100)
 

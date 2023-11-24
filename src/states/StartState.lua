@@ -10,10 +10,9 @@ local HIndex = 5
 local ThreeIndex = 6
 
 function StartState:init()
-    self.pallette        = Assets:getPallette()
-    self.colorTimer      = self:createColorTimer()
-    self.alphaTransition = 0
-    self.board           = BoardManager.factory(CENTER_WIDTH - 128, 16)
+    self.pallette   = Assets:getPallette()
+    self.colorTimer = self:createColorTimer()
+    self.board      = BoardManager.factory(CENTER_WIDTH - 128, 16)
 end
 
 function StartState:update(dt)
@@ -29,14 +28,8 @@ function StartState:update(dt)
 
     if highlighted then
         Chain(
-            function(next)
-                Timer.tween(.25, {
-                    [self] = { alphaTransition = 1 }
-                }):finish(next)
-            end,
-            function()
-                State:change("newGame")
-            end
+            State:fade(1),
+            State:chainChange("newGame")
         )()
 
         self.colorTimer:remove()
@@ -51,9 +44,10 @@ function StartState:draw()
     self:drawTitleCard()
     self.drawMenuCard()
 
-    love.graphics.setColor(1, 1, 1, self.alphaTransition)
-    love.graphics.rectangle("fill", 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
-    Assets.colors.reset()
+
+    -- love.graphics.setColor(1, 1, 1, self.alphaTransition)
+    -- love.graphics.rectangle("fill", 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
+    -- Assets.colors.reset()
 end
 
 function StartState:createColorTimer()
