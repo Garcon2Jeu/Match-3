@@ -3,6 +3,7 @@ AtlasManager = Class {}
 local tileSize = 32
 local rows = 9
 local columns = 12
+local totalColors = rows * 2
 
 function AtlasManager:init()
     self.quads = AtlasManager.getTilesQuads()
@@ -32,6 +33,14 @@ function AtlasManager.getTilesQuads()
 
 
     return board
+end
+
+function AtlasManager.getTileSize()
+    return tileSize
+end
+
+function AtlasManager.getTotalColors()
+    return totalColors
 end
 
 return AtlasManager()

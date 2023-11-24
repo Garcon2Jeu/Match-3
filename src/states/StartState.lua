@@ -10,9 +10,10 @@ local HIndex = 5
 local ThreeIndex = 6
 
 function StartState:init()
-    self.pallette = Assets:getPallette()
-    self.colorTimer = self:createColorTimer()
+    self.pallette        = Assets:getPallette()
+    self.colorTimer      = self:createColorTimer()
     self.alphaTransition = 0
+    self.board           = BoardManager.factory(CENTER_WIDTH - 128, 16)
 end
 
 function StartState:update(dt)
@@ -37,6 +38,7 @@ function StartState:update(dt)
                 State:change("newGame")
             end
         )()
+
         self.colorTimer:remove()
     else
         love.event.quit()
@@ -44,6 +46,8 @@ function StartState:update(dt)
 end
 
 function StartState:draw()
+    BoardManager.draw(self.board)
+
     self:drawTitleCard()
     self.drawMenuCard()
 
