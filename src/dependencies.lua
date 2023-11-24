@@ -9,9 +9,11 @@ App = require "src.App"
 
 require "src.managers.StateManager"
 Assets = require "src.managers.AssetsManager"
-require "src.managers.AtlasManager"
+Atlas = require "src.managers.AtlasManager"
 
 require "src.states.BaseState"
 require "src.states.StartState"
 require "src.states.NewGameState"
 require "src.states.PlayState"
+
+require "objects.Tile"

@@ -4,6 +4,10 @@ local tileSize = 32
 local rows = 9
 local columns = 12
 
+function AtlasManager:init()
+    self.quads = AtlasManager.getTilesQuads()
+end
+
 function AtlasManager.getTilesQuads()
     local board = {}
 
@@ -29,6 +33,8 @@ function AtlasManager.getTilesQuads()
 
     return board
 end
+
+return AtlasManager()
 
 -- function AtlasManager:draw()
 --     local x = 10
