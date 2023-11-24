@@ -29,8 +29,6 @@ function StartState:update(dt)
             State:fade(1),
             State:chainChange("newGame")
         )()
-
-        self.colorTimer:remove()
     else
         love.event.quit()
     end
@@ -123,4 +121,8 @@ function StartState.drawMenuCard()
 
     love.graphics.printf("Exit", 0, CENTER_HEIGHT + 65, VIRTUAL_WIDTH, "center")
     Assets.colors.reset()
+end
+
+function StartState:exit()
+    self.colorTimer:remove()
 end
