@@ -22,6 +22,7 @@ function StateManager:draw()
     self:drawTransition()
 end
 
+-- Only use this when changing state within a Chain()()
 function StateManager:chainChange(stateName, enterParams)
     return function(next)
         self:change(stateName, enterParams)

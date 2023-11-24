@@ -16,8 +16,6 @@ function StartState:init()
 end
 
 function StartState:update(dt)
-    Timer.update(dt)
-
     if App:wasKeyPressed("up") or App:wasKeyPressed("down") then
         highlighted = not highlighted
     end
@@ -40,14 +38,8 @@ end
 
 function StartState:draw()
     BoardManager.draw(self.board)
-
     self:drawTitleCard()
     self.drawMenuCard()
-
-
-    -- love.graphics.setColor(1, 1, 1, self.alphaTransition)
-    -- love.graphics.rectangle("fill", 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
-    -- Assets.colors.reset()
 end
 
 function StartState:createColorTimer()

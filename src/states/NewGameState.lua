@@ -4,6 +4,7 @@ local slideTime = .25
 local slidePause = 1.5
 
 function NewGameState:init()
+    self.board = BoardManager.factory(CENTER_WIDTH - 16, 16)
     self.levelCardY = -100
 
     Chain(
@@ -15,7 +16,7 @@ function NewGameState:init()
         end,
 
         self:slideLevelCard(VIRTUAL_HEIGHT),
-        State:chainChange("play")
+        State:chainChange("play", self.board)
     )()
 end
 
@@ -27,11 +28,9 @@ function NewGameState:slideLevelCard(targetY)
     end
 end
 
-function NewGameState:update(dt)
-    Timer.update(dt)
-end
-
 function NewGameState:draw()
+    BoardManager.draw(self.board)
+
     Assets.colors.setPurple(.5)
     love.graphics.rectangle("fill", 0, self.levelCardY, VIRTUAL_WIDTH, 100)
 

@@ -11,6 +11,7 @@ require "src.managers.StateManager"
 Assets = require "src.managers.AssetsManager"
 Atlas = require "src.managers.AtlasManager"
 require "src.managers.BoardManager"
+require "src.managers.PlayerManager"
 
 require "src.states.BaseState"
 require "src.states.StartState"

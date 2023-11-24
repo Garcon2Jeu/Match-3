@@ -11,6 +11,7 @@ function love.load()
 end
 
 function love.update(dt)
+    Timer.update(dt)
     State:update(dt)
     App:update()
 end
