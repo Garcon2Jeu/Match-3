@@ -78,10 +78,8 @@ function PlayerManager:selectTile()
         return
     end
 
-    if self.selected
-        and self.cursor.row == self.selected.row
-        and self.cursor.column == self.selected.column then
-        self.selected = nil
+    if self:isSameTileSelected() then
+        self:unselect()
         return
     end
 
@@ -89,6 +87,16 @@ function PlayerManager:selectTile()
         row = self.cursor.row,
         column = self.cursor.column
     }
+end
+
+function PlayerManager:isSameTileSelected()
+    return self.selected
+        and self.cursor.row == self.selected.row
+        and self.cursor.column == self.selected.column
+end
+
+function PlayerManager:unselect()
+    self.selected = nil
 end
 
 function PlayerManager:drawCursor(board)

@@ -36,6 +36,27 @@ function Board.factory(xOffset, yOffset)
     return board
 end
 
-function Board:update(dt)
+function Board:areTilesAdjacent(tile1, tile2)
+    return math.abs(tile1.row - tile2.row) + math.abs(tile1.column - tile2.column) == 1
+end
 
+function Board:swapTiles(tile1, tile2)
+    local tempTile = self.grid[tile1.row][tile1.column]
+    self.grid[tile1.row][tile1.column] = self.grid[tile2.row][tile2.column]
+    self.grid[tile2.row][tile2.column] = tempTile
+
+    local tempX, tempY =
+        self.grid[tile1.row][tile1.column].x,
+        self.grid[tile1.row][tile1.column].y
+
+    Timer.tween(.25, {
+        [self.grid[tile1.row][tile1.column]] = {
+            x = self.grid[tile2.row][tile2.column].x,
+            y = self.grid[tile2.row][tile2.column].y,
+        },
+        [self.grid[tile2.row][tile2.column]] = {
+            x = tempX,
+            y = tempY,
+        },
+    })
 end

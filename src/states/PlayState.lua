@@ -15,6 +15,13 @@ end
 
 function PlayState:update(dt)
     self.player:update(dt)
+
+    if App:wasKeyPressed("return") and self:isSwapPossible() then
+        self.board:swapTiles(
+            self.player.selected,
+            self.player.cursor
+        )
+    end
 end
 
 function PlayState:draw()
@@ -24,4 +31,14 @@ end
 
 function PlayState:exit()
 
+end
+
+function PlayState:isSwapPossible()
+    return
+        self.player.selected
+        and not self.player:isSameTileSelected()
+        and self.board:areTilesAdjacent(
+            self.player.selected,
+            self.player.cursor
+        )
 end
