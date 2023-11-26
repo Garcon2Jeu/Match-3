@@ -60,3 +60,97 @@ function Board:swapTiles(tile1, tile2)
         },
     })
 end
+
+function Board:getAllMatches()
+    local totalMatches = self:getMatchesBy("row")
+
+    for key, match in pairs(self:getMatchesBy("column")) do
+        table.insert(totalMatches, match)
+    end
+
+    return totalMatches
+end
+
+function Board:getMatchesBy(direction)
+    local totalMatches = {}
+
+    for i = 1, 8 do
+        local row = direction == "row" and i or 1
+        local column = direction == "column" and i or 1
+
+        local currentMatch = { self.grid[row][column] }
+
+        for j = 2, 8 do
+            row = direction == "row" and row or j
+            column = direction == "column" and column or j
+
+            if currentMatch[1].color == self.grid[row][column].color then
+                table.insert(currentMatch, self.grid[row][column])
+            else
+                if #currentMatch >= 3 then
+                    table.insert(totalMatches, currentMatch)
+                end
+
+                currentMatch = { self.grid[row][column] }
+            end
+        end
+
+        if #currentMatch >= 3 then
+            table.insert(totalMatches, currentMatch)
+        end
+    end
+
+    return totalMatches
+end
+
+-- function PlayState:getRowMatches()
+--     local totalMatches = {}
+
+--     for row = 1, 8 do
+--         local currentMatch = { self.grid[row][1] }
+
+--         for column = 2, 8 do
+--             if currentMatch[1].color == self.grid[row][column].color then
+--                 table.insert(currentMatch, self.grid[row][column])
+--             else
+--                 if #currentMatch >= 3 then
+--                     table.insert(totalMatches, currentMatch)
+--                 end
+
+--                 currentMatch = { self.grid[row][column] }
+--             end
+--         end
+
+--         if #currentMatch >= 3 then
+--             table.insert(totalMatches, currentMatch)
+--         end
+--     end
+
+--     return totalMatches
+-- end
+
+-- function PlayState:getColumnMatches()
+--     local totalMatches = {}
+
+--     for column = 1, 8 do
+--         local currentMatch = { self.grid[1][column] }
+
+--         for row = 2, 8 do
+--             if currentMatch[1].color == self.grid[row][column].color then
+--                 table.insert(currentMatch, self.grid[row][column])
+--             else
+--                 if #currentMatch >= 3 then
+--                     table.insert(totalMatches, currentMatch)
+--                 end
+
+--                 currentMatch = { self.grid[row][column] }
+--             end
+--         end
+
+--         if #currentMatch >= 3 then
+--             table.insert(totalMatches, currentMatch)
+--         end
+--     end
+
+--     return totalMatches
+-- end

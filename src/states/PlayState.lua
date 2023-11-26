@@ -27,6 +27,18 @@ end
 function PlayState:draw()
     self.board:draw()
     self.player:draw(self.board)
+
+    ------------------------------------------------------DEBUG-------------------------------------------------------------------
+    -- love.graphics.print(tostring(#self.board:getMatchesBy("row")), 50, 50)
+    -- love.graphics.print(tostring(#self.board:getMatchesBy("column")), 50, 70)
+    -- love.graphics.print(tostring(#self.board:getAllMatches()), 50, 90)
+
+
+    -- if #self.board:getAllMatches() > 0 then
+    --     love.graphics.print(tostring(self.board:getAllMatches()[1][1].row), 50, 110)
+    --     love.graphics.print(tostring(self.board:getAllMatches()[1][1].column), 50, 120)
+    -- end
+    ------------------------------------------------------DEBUG-------------------------------------------------------------------
 end
 
 function PlayState:exit()
@@ -37,8 +49,8 @@ function PlayState:isSwapPossible()
     return
         self.player.selected
         and not self.player:isSameTileSelected()
-        and self.board:areTilesAdjacent(
-            self.player.selected,
-            self.player.cursor
-        )
+    -- and self.board:areTilesAdjacent(
+    --     self.player.selected,
+    --     self.player.cursor
+    -- )
 end
