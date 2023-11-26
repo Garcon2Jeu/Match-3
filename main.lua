@@ -7,7 +7,7 @@ function love.load()
         ["play"] = function() return PlayState() end,
     }
 
-    State:change("start")
+    State:change("play")
 end
 
 function love.update(dt)

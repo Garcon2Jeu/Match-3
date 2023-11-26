@@ -5,6 +5,8 @@ local slidePause = 1.5
 
 function NewGameState:init()
     self.levelCardY = -100
+    self.board = Board()
+
 
     Chain(
         State:fade(0),
@@ -15,7 +17,7 @@ function NewGameState:init()
         end,
 
         self:slideLevelCard(VIRTUAL_HEIGHT),
-        State:chainChange("play")
+        State:chainChange("play", self.board)
     )()
 end
 
@@ -28,6 +30,8 @@ function NewGameState:slideLevelCard(targetY)
 end
 
 function NewGameState:draw()
+    self.board:draw()
+
     Assets.colors.setPurple(.5)
     love.graphics.rectangle("fill", 0, self.levelCardY, VIRTUAL_WIDTH, 100)
 

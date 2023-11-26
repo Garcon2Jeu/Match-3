@@ -1,6 +1,6 @@
 Tile = Class {}
 
-function Tile:init(x, y, color, pattern)
+function Tile:init(x, y, color, pattern, row, column)
     self.x           = x
     self.y           = y
     self.color       = color
@@ -8,6 +8,9 @@ function Tile:init(x, y, color, pattern)
 
     self.highlighted = false
     self.selected    = false
+
+    self.row         = row
+    self.column      = column
 end
 
 function Tile:update(dt) end

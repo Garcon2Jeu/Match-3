@@ -12,6 +12,7 @@ local ThreeIndex = 6
 function StartState:init()
     self.pallette   = Assets:getPallette()
     self.colorTimer = self:createColorTimer()
+    self.board      = Board.factory(CENTER_WIDTH - 128, 16)
 end
 
 function StartState:update(dt)
@@ -34,6 +35,7 @@ function StartState:update(dt)
 end
 
 function StartState:draw()
+    Board:draw(self.board)
     self:drawTitleCard()
     self.drawMenuCard()
 end
