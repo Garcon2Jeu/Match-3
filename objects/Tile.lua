@@ -11,11 +11,16 @@ function Tile:init(x, y, color, pattern, row, column)
 
     self.row         = row
     self.column      = column
+    self.drawn       = true
 end
 
 function Tile:update(dt) end
 
 function Tile:draw()
+    if not self.drawn then
+        return
+    end
+
     love.graphics.draw(Assets.graphics["match3"], Atlas.quads[self.color][self.pattern], self.x, self.y)
 
     love.graphics.setLineWidth(4)

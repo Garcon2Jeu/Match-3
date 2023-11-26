@@ -33,6 +33,10 @@ function Board.factory(xOffset, yOffset)
         table.insert(board, gridRow)
     end
 
+    if #Board:getAllMatches(board) > 0 then
+        board = Board.factory(xOffset, yOffset)
+    end
+
     return board
 end
 
@@ -41,14 +45,10 @@ function Board:areTilesAdjacent(tile1, tile2)
 end
 
 function Board:swapTiles(tile1, tile2)
-    local tempTile = self.grid[tile1.row][tile1.column]
-    self.grid[tile1.row][tile1.column] = self.grid[tile2.row][tile2.column]
-    self.grid[tile2.row][tile2.column] = tempTile
-
+    -- Swap XY
     local tempX, tempY =
         self.grid[tile1.row][tile1.column].x,
         self.grid[tile1.row][tile1.column].y
-
     Timer.tween(.25, {
         [self.grid[tile1.row][tile1.column]] = {
             x = self.grid[tile2.row][tile2.column].x,
@@ -59,39 +59,58 @@ function Board:swapTiles(tile1, tile2)
             y = tempY,
         },
     })
+
+    -- Swap Row/Column
+    local tempRow, tempColumn =
+        self.grid[tile1.row][tile1.column].row,
+        self.grid[tile1.row][tile1.column].column
+    self.grid[tile1.row][tile1.column].row,
+    self.grid[tile1.row][tile1.column].column =
+        self.grid[tile2.row][tile2.column].row,
+        self.grid[tile2.row][tile2.column].column
+    self.grid[tile2.row][tile2.column].row,
+    self.grid[tile2.row][tile2.column].column =
+        tempRow, tempColumn
+
+    -- Swap Grid Position
+    local tempTile = self.grid[tile1.row][tile1.column]
+    self.grid[tile1.row][tile1.column] = self.grid[tile2.row][tile2.column]
+    self.grid[tile2.row][tile2.column] = tempTile
 end
 
-function Board:getAllMatches()
-    local totalMatches = self:getMatchesBy("row")
+function Board:getAllMatches(grid)
+    local totalMatches = self:getMatchesBy("row", grid)
 
-    for key, match in pairs(self:getMatchesBy("column")) do
+    for key, match in pairs(self:getMatchesBy("column", grid)) do
         table.insert(totalMatches, match)
     end
 
     return totalMatches
 end
 
-function Board:getMatchesBy(direction)
+function Board:getMatchesBy(direction, grid)
     local totalMatches = {}
+
+    grid = grid or self.grid
 
     for i = 1, 8 do
         local row = direction == "row" and i or 1
         local column = direction == "column" and i or 1
 
-        local currentMatch = { self.grid[row][column] }
+        local currentMatch = { grid[row][column] }
 
         for j = 2, 8 do
             row = direction == "row" and row or j
             column = direction == "column" and column or j
 
-            if currentMatch[1].color == self.grid[row][column].color then
-                table.insert(currentMatch, self.grid[row][column])
+            if currentMatch[1].color == grid[row][column].color then
+                table.insert(currentMatch, grid[row][column])
             else
                 if #currentMatch >= 3 then
                     table.insert(totalMatches, currentMatch)
                 end
 
-                currentMatch = { self.grid[row][column] }
+                currentMatch = { grid[row][column] }
             end
         end
 
@@ -101,6 +120,15 @@ function Board:getMatchesBy(direction)
     end
 
     return totalMatches
+end
+
+-- KEEP UP THE GOOD JOB BITCH!!!!!!!--------------------------
+function Board:removeMatches(matches)
+    for key, match in pairs(matches) do
+        for key, tile in pairs(match) do
+            self.grid[tile.row][tile.column] = nil
+        end
+    end
 end
 
 -- function PlayState:getRowMatches()

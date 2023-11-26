@@ -21,6 +21,9 @@ function PlayState:update(dt)
             self.player.selected,
             self.player.cursor
         )
+        self.player:unselect()
+        local matches = self.board:getAllMatches()
+        self.board:removeMatches(matches)
     end
 end
 
@@ -33,10 +36,13 @@ function PlayState:draw()
     -- love.graphics.print(tostring(#self.board:getMatchesBy("column")), 50, 70)
     -- love.graphics.print(tostring(#self.board:getAllMatches()), 50, 90)
 
-
     -- if #self.board:getAllMatches() > 0 then
-    --     love.graphics.print(tostring(self.board:getAllMatches()[1][1].row), 50, 110)
-    --     love.graphics.print(tostring(self.board:getAllMatches()[1][1].column), 50, 120)
+    --     love.graphics.print(tostring(self.board:getAllMatches()[1][1].row), 50, 50)
+    --     love.graphics.print(tostring(self.board:getAllMatches()[1][1].column), 50, 70)
+    --     love.graphics.print(tostring(self.board:getAllMatches()[1][2].row), 50, 90)
+    --     love.graphics.print(tostring(self.board:getAllMatches()[1][2].column), 50, 110)
+    --     love.graphics.print(tostring(self.board:getAllMatches()[1][3].row), 50, 130)
+    --     love.graphics.print(tostring(self.board:getAllMatches()[1][3].column), 50, 150)
     -- end
     ------------------------------------------------------DEBUG-------------------------------------------------------------------
 end
