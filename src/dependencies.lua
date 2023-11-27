@@ -16,6 +16,7 @@ require "src.states.BaseState"
 require "src.states.StartState"
 require "src.states.NewGameState"
 require "src.states.PlayState"
+require "src.states.GameOverState"
 
 require "objects.Board"
 require "objects.Tile"
