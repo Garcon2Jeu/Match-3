@@ -2,14 +2,14 @@ PlayState = Class { __includes = BaseState }
 
 function PlayState:init()
     ------------------------------------------------------DEBUG-------------------------------------------------------------------
-    self.board = Board()
+    -- self.board = Board()
     ------------------------------------------------------DEBUG-------------------------------------------------------------------
     self.player = PlayerManager()
 end
 
 function PlayState:enter(params)
     ------------------------------------------------------DEBUG-------------------------------------------------------------------
-    -- self.board = params
+    self.board = params
     ------------------------------------------------------DEBUG-------------------------------------------------------------------
 end
 
@@ -22,6 +22,10 @@ function PlayState:update(dt)
             self:RemoveDropReplaceTiles()
         )()
     end
+
+    if self.player:hasReachedTimeLimit() then
+        State:change("over", self.player.score)
+    end
 end
 
 function PlayState:draw()
@@ -30,7 +34,7 @@ function PlayState:draw()
 end
 
 function PlayState:exit()
-
+    -- self.player.countDown:remove()
 end
 
 function PlayState:isSwapPossible()

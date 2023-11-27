@@ -8,7 +8,7 @@ function love.load()
         ["over"] = function() return GameOverState() end,
     }
 
-    State:change("play")
+    State:change("start")
 end
 
 function love.update(dt)

@@ -13,6 +13,8 @@ function StartState:init()
     self.pallette   = Assets:getPallette()
     self.colorTimer = self:createColorTimer()
     self.board      = Board.factory(CENTER_WIDTH - 128, 16)
+
+    Chain(State:fade(0))()
 end
 
 function StartState:update(dt)

@@ -13,7 +13,7 @@ function PlayerManager:init()
     self.score    = 0
     self.level    = 1
     self.goal     = 1250
-    self.timer    = 300
+    self.timer    = 1
 
     self.cursor   = {
         row = 1,
@@ -126,4 +126,8 @@ function PlayerManager:addToScore(matches)
     for key, match in pairs(matches) do
         self.score = self.score + #match * 50
     end
+end
+
+function PlayerManager:hasReachedTimeLimit()
+    return self.timer <= 0
 end
