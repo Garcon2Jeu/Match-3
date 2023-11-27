@@ -12,21 +12,24 @@ local container = {
 function PlayerManager:init()
     self.score    = 0
     self.level    = 1
-    self.goal     = 1250
-    self.timer    = 1
+    self.goal     = 150
+    self.timer    = 300
 
     self.cursor   = {
         row = 1,
         column = 1
     }
     self.selected = nil
+end
 
-
-    Timer.every(1, function() self.timer = self.timer - 1 end)
-
+function PlayerManager:slideContainer()
     Timer.tween(.25, {
         [container] = { x = 16 }
     })
+end
+
+function PlayerManager:startCountdown()
+    self.countdown = Timer.every(1, function() self.timer = self.timer - 1 end)
 end
 
 function PlayerManager:update(dt)
@@ -130,4 +133,13 @@ end
 
 function PlayerManager:hasReachedTimeLimit()
     return self.timer <= 0
+end
+
+function PlayerManager:hasReachedGoal()
+    return self.score >= self.goal
+end
+
+function PlayerManager:levelUp()
+    self.level = self.level + 1
+    self.goal = self.goal * self.level
 end

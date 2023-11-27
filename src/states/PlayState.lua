@@ -1,16 +1,11 @@
 PlayState = Class { __includes = BaseState }
 
-function PlayState:init()
-    ------------------------------------------------------DEBUG-------------------------------------------------------------------
-    -- self.board = Board()
-    ------------------------------------------------------DEBUG-------------------------------------------------------------------
-    self.player = PlayerManager()
-end
 
 function PlayState:enter(params)
-    ------------------------------------------------------DEBUG-------------------------------------------------------------------
-    self.board = params
-    ------------------------------------------------------DEBUG-------------------------------------------------------------------
+    self.board = params.board
+    self.player = params.player
+    self.player:slideContainer()
+    self.player:startCountdown()
 end
 
 function PlayState:update(dt)
@@ -20,6 +15,14 @@ function PlayState:update(dt)
         Chain(
             self:SwapTiles(),
             self:RemoveDropReplaceTiles()
+        )()
+    end
+
+    if self.player:hasReachedGoal() then
+        self.player:levelUp()
+        Chain(
+            State:fade(1),
+            State:chainChange("newGame", self.player)
         )()
     end
 
@@ -34,7 +37,7 @@ function PlayState:draw()
 end
 
 function PlayState:exit()
-    -- self.player.countDown:remove()
+    self.player.countdown:remove()
 end
 
 function PlayState:isSwapPossible()

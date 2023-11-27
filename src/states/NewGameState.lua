@@ -6,7 +6,10 @@ local slidePause = 1.5
 function NewGameState:init()
     self.levelCardY = -100
     self.board = Board()
+end
 
+function NewGameState:enter(params)
+    self.player = params or PlayerManager()
 
     Chain(
         State:fade(0),
@@ -17,7 +20,10 @@ function NewGameState:init()
         end,
 
         self:slideLevelCard(VIRTUAL_HEIGHT),
-        State:chainChange("play", self.board)
+        State:chainChange("play", {
+            board = self.board,
+            player = self.player
+        })
     )()
 end
 
@@ -37,5 +43,5 @@ function NewGameState:draw()
 
     Assets.colors.setWhite()
     Assets.fonts.setLarge()
-    love.graphics.printf("level 1", 0, self.levelCardY + 34, VIRTUAL_WIDTH, "center")
+    love.graphics.printf("level " .. tostring(self.player.level), 0, self.levelCardY + 34, VIRTUAL_WIDTH, "center")
 end
