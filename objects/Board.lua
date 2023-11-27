@@ -46,7 +46,7 @@ function Board:areTilesAdjacent(tile1, tile2)
     return math.abs(tile1.row - tile2.row) + math.abs(tile1.column - tile2.column) == 1
 end
 
-function Board:swapTiles(tile1, tile2, next)
+function Board:swapTiles(tile1, tile2)
     -- Swap Row/Column
     local tempRow, tempColumn =
         self.grid[tile1.row][tile1.column].row,
@@ -82,18 +82,7 @@ function Board:swapTiles(tile1, tile2, next)
         },
     }
 
-    Timer.tween(.25, tweeningData):finish(next)
-end
-
-function Board:RemoveDropReplace()
-    return function()
-        local matches = self:getAllMatches()
-
-        if #matches > 0 then
-            self:removeMatches(matches)
-            self:dropTiles(matches)
-        end
-    end
+    return tweeningData
 end
 
 function Board:getAllMatches(grid)
@@ -148,7 +137,7 @@ function Board:removeMatches(matches)
     end
 end
 
-function Board:dropTiles(matches)
+function Board:dropReplaceTiles(matches)
     local tweeningData = {}
 
     for key, match in pairs(matches) do
@@ -187,7 +176,7 @@ function Board:dropTiles(matches)
         end
     end
 
-    Timer.tween(.25, tweeningData):finish(self:RemoveDropReplace())
+    return tweeningData
 end
 
 function Board.getYoffset()

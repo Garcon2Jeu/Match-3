@@ -18,15 +18,8 @@ function PlayState:update(dt)
 
     if App:wasKeyPressed("return") and self:isSwapPossible() then
         Chain(
-            function(next)
-                self.board:swapTiles(
-                    self.player.selected,
-                    self.player.cursor,
-                    next
-                )
-                self.player:unselect()
-            end,
-            self.board:RemoveDropReplace()
+            self:SwapTiles(),
+            self:RemoveDropReplaceTiles()
         )()
     end
 end
@@ -44,8 +37,35 @@ function PlayState:isSwapPossible()
     return
         self.player.selected
         and not self.player:isSameTileSelected()
-    -- and self.board:areTilesAdjacent(
-    --     self.player.selected,
-    --     self.player.cursor
-    -- )
+        and self.board:areTilesAdjacent(
+            self.player.selected,
+            self.player.cursor
+        )
+end
+
+function PlayState:SwapTiles()
+    return function(next)
+        local tweeningData = self.board:swapTiles(
+            self.player.selected,
+            self.player.cursor
+        )
+        self.player:unselect()
+
+        Timer.tween(.25, tweeningData):finish(next)
+    end
+end
+
+function PlayState:RemoveDropReplaceTiles()
+    return function()
+        local matches = self.board:getAllMatches()
+
+        if #matches < 1 then
+            return
+        end
+
+        self.board:removeMatches(matches)
+        local tweeningData = self.board:dropReplaceTiles(matches)
+
+        Timer.tween(.25, tweeningData):finish(self:RemoveDropReplaceTiles())
+    end
 end
