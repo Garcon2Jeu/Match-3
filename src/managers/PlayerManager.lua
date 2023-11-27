@@ -121,3 +121,9 @@ function PlayerManager:drawSelected(board)
         32, 32, 4)
     Assets.colors.reset()
 end
+
+function PlayerManager:addToScore(matches)
+    for key, match in pairs(matches) do
+        self.score = self.score + #match * 50
+    end
+end

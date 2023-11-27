@@ -63,6 +63,7 @@ function PlayState:RemoveDropReplaceTiles()
             return
         end
 
+        self.player:addToScore(matches)
         self.board:removeMatches(matches)
         local tweeningData = self.board:dropReplaceTiles(matches)
 
