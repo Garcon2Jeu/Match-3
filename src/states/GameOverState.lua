@@ -1,11 +1,16 @@
 GameOverState = Class { __includes = BaseState }
 
+function GameOverState:init()
+    Chain(State:fade(0))()
+end
+
 function GameOverState:enter(params)
     self.score = params
 end
 
 function GameOverState:update(dt)
     if App:wasKeyPressed("return") then
+        Assets.audio["select"]:play()
         Chain(
             State:fade(1),
             State:chainChange("start")

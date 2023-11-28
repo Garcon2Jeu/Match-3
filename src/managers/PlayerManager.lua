@@ -30,7 +30,14 @@ function PlayerManager:slideContainer()
 end
 
 function PlayerManager:startCountdown()
-    self.countdown = Timer.every(1, function() self.timer = self.timer - 1 end)
+    self.countdown =
+        Timer.every(1,
+            function()
+                self.timer = self.timer - 1
+                if self.timer <= 60 then
+                    Assets.audio["clock"]:play()
+                end
+            end)
 end
 
 function PlayerManager:update(dt)
@@ -68,12 +75,16 @@ end
 function PlayerManager:moveCursor()
     if App:wasKeyPressed("right") then
         self.cursor.column = self.cursor.column + 1 > 8 and 1 or self.cursor.column + 1
+        Assets.audio["select"]:play()
     elseif App:wasKeyPressed("left") then
         self.cursor.column = self.cursor.column - 1 < 1 and 8 or self.cursor.column - 1
+        Assets.audio["select"]:play()
     elseif App:wasKeyPressed("down") then
         self.cursor.row = self.cursor.row + 1 > 8 and 1 or self.cursor.row + 1
+        Assets.audio["select"]:play()
     elseif App:wasKeyPressed("up") then
         self.cursor.row = self.cursor.row - 1 < 1 and 8 or self.cursor.row - 1
+        Assets.audio["select"]:play()
     end
 end
 

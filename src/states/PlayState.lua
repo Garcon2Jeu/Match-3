@@ -11,14 +11,8 @@ end
 function PlayState:update(dt)
     self.player:update(dt)
 
-    if App:wasKeyPressed("return") and self:isSwapPossible() then
-        Chain(
-            self:SwapTiles(),
-            self:RemoveDropReplaceTiles()
-        )()
-    end
-
     if self.player:hasReachedGoal() then
+        Assets.audio["next-level"]:play()
         self.player:levelUp()
         Chain(
             State:fade(1),
@@ -27,7 +21,25 @@ function PlayState:update(dt)
     end
 
     if self.player:hasReachedTimeLimit() then
-        State:change("over", self.player.score)
+        Assets.audio["game-over"]:play()
+
+        Chain(
+            State:fade(1),
+            State:chainChange("over", self.player.score)
+        )()
+    end
+
+    if not App:wasKeyPressed("return") then
+        return
+    end
+
+    if self:isSwapPossible() then
+        Chain(
+            self:SwapTiles(),
+            self:RemoveDropReplaceTiles()
+        )()
+    else
+        Assets.audio["error"]:play()
     end
 end
 
@@ -70,6 +82,7 @@ function PlayState:RemoveDropReplaceTiles()
             return
         end
 
+        Assets.audio["match"]:play()
         self.player:addToScore(matches)
         self.board:removeMatches(matches)
         local tweeningData = self.board:dropReplaceTiles(matches)

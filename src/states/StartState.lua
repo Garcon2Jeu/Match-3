@@ -19,6 +19,7 @@ end
 
 function StartState:update(dt)
     if App:wasKeyPressed("up") or App:wasKeyPressed("down") then
+        Assets.audio["select"]:play()
         highlighted = not highlighted
     end
 

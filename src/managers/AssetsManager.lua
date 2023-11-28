@@ -19,7 +19,7 @@ function AssetsManager.getAudio()
         ["clock"]      = love.audio.newSource("assets/audio/clock.wav", "static"),
         ["error"]      = love.audio.newSource("assets/audio/error.wav", "static"),
         ["game-over"]  = love.audio.newSource("assets/audio/game-over.wav", "static"),
-        ["math"]       = love.audio.newSource("assets/audio/match.wav", "static"),
+        ["match"]      = love.audio.newSource("assets/audio/match.wav", "static"),
         ["music"]      = love.audio.newSource("assets/audio/music.mp3", "static"),
         ["music2"]     = love.audio.newSource("assets/audio/music2.mp3", "static"),
         ["music3"]     = love.audio.newSource("assets/audio/music3.mp3", "static"),
