@@ -10,9 +10,10 @@ local container = {
 }
 
 function PlayerManager:init()
-    self.score    = 0
-    self.level    = 1
-    self.goal     = 150
+    self.score = 0
+    self.level = 0
+    self.goal  = 0
+    self:levelUp()
     self.timer    = 300
 
     self.cursor   = {
@@ -141,5 +142,5 @@ end
 
 function PlayerManager:levelUp()
     self.level = self.level + 1
-    self.goal = self.goal * self.level
+    self.goal = self.level * 1.25 * 1000
 end
