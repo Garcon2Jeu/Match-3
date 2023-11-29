@@ -1,8 +1,10 @@
 Board = Class {}
 
+
 local boardSize = 8
 local xOffset = CENTER_WIDTH - 16
 local yOffset = 16
+
 
 function Board:init(level)
     self.grid = self.factory(xOffset, yOffset, level)

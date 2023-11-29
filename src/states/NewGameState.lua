@@ -1,7 +1,9 @@
 NewGameState = Class { __includes = BaseState }
 
+
 local slideTime = .25
 local slidePause = 1.5
+
 
 function NewGameState:init()
     self.levelCardY = -100

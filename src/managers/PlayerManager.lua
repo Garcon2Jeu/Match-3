@@ -9,15 +9,14 @@ local container = {
     cornerRadius = 4
 }
 
+
 function PlayerManager:init()
     self.score = 0
     self.level = 0
     self.goal  = 0
+    self.timer = 60
+
     self:levelUp()
-    ------------------------------------------------------DEBUG-------------------------------------------------------------------
-    -- self.timer = 60
-    self.timer = 300
-    ------------------------------------------------------DEBUG-------------------------------------------------------------------
 end
 
 function PlayerManager:draw()

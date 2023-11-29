@@ -1,5 +1,6 @@
 App = Class {}
 
+
 function App:init()
     math.randomseed(os.time())
     self.setupWindow()

@@ -1,5 +1,6 @@
 PlayState = Class { __includes = BaseState }
 
+
 local swapTime = .25
 local dropTime = .25
 
@@ -68,13 +69,10 @@ function PlayState:isSwapPossible()
     return
         self.cursor.selected
         and not self.cursor:isSameTileSelected()
-
-        ------------------------------------------------------DEBUG-------------------------------------------------------------------
         and self.board:areTilesAdjacent(
             self.cursor.selected,
             self.cursor.cursor
         )
-    ------------------------------------------------------DEBUG-------------------------------------------------------------------
 end
 
 function PlayState:SwapTiles()

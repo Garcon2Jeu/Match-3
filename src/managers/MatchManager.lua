@@ -1,5 +1,6 @@
 MatchManager = Class {}
 
+
 function MatchManager:getAllMatches(grid)
     local totalMatches = self.getMatchesBy(grid, "row")
 
@@ -76,66 +77,3 @@ function MatchManager.removeMatches(grid, matches)
 end
 
 return MatchManager
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
--- function PlayState:getRowMatches()
---     local totalMatches = {}
-
---     for row = 1, 8 do
---         local currentMatch = { self.grid[row][1] }
-
---         for column = 2, 8 do
---             if currentMatch[1].color == self.grid[row][column].color then
---                 table.insert(currentMatch, self.grid[row][column])
---             else
---                 if #currentMatch >= 3 then
---                     table.insert(totalMatches, currentMatch)
---                 end
-
---                 currentMatch = { self.grid[row][column] }
---             end
---         end
-
---         if #currentMatch >= 3 then
---             table.insert(totalMatches, currentMatch)
---         end
---     end
-
---     return totalMatches
--- end
-
--- function PlayState:getColumnMatches()
---     local totalMatches = {}
-
---     for column = 1, 8 do
---         local currentMatch = { self.grid[1][column] }
-
---         for row = 2, 8 do
---             if currentMatch[1].color == self.grid[row][column].color then
---                 table.insert(currentMatch, self.grid[row][column])
---             else
---                 if #currentMatch >= 3 then
---                     table.insert(totalMatches, currentMatch)
---                 end
-
---                 currentMatch = { self.grid[row][column] }
---             end
---         end
-
---         if #currentMatch >= 3 then
---             table.insert(totalMatches, currentMatch)
---         end
---     end
-
---     return totalMatches
--- end
-
---INSTANTLY SWAP XY
--- self.grid[tile1.row][tile1.column].x,
--- self.grid[tile1.row][tile1.column].y =
---     self.grid[tile2.row][tile2.column].x,
---     self.grid[tile2.row][tile2.column].y
--- self.grid[tile2.row][tile2.column].x,
--- self.grid[tile2.row][tile2.column].y =
---     tempX, tempY

@@ -1,5 +1,6 @@
 StartState = Class { __includes = BaseState }
 
+
 local highlighted = true
 
 local MIndex = 1
@@ -8,6 +9,7 @@ local TIndex = 3
 local CIndex = 4
 local HIndex = 5
 local ThreeIndex = 6
+
 
 function StartState:init()
     self.pallette   = Assets:getPallette()

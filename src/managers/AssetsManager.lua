@@ -1,5 +1,6 @@
 AssetsManager = Class {}
 
+
 function AssetsManager:init()
     self.graphics = self.getGraphics()
     self.audio    = self.getAudio()

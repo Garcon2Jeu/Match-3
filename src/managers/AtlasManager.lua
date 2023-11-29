@@ -1,9 +1,11 @@
 AtlasManager = Class {}
 
+
 local tileSize = 32
 local rows = 9
 local columns = 12
 local totalColors = rows * 2
+
 
 function AtlasManager:init()
     self.quads = AtlasManager.getTilesQuads()
@@ -44,16 +46,3 @@ function AtlasManager.getTotalColors()
 end
 
 return AtlasManager()
-
--- function AtlasManager:draw()
---     local x = 10
---     local y = 10
---     for key, color in pairs(self.board) do
---         for key, tile in pairs(color) do
---             love.graphics.draw(Assets.graphics["match3"], tile, x, y, 0, .25, .25)
---             x = x + (tileSize / 4)
---         end
---         x = 10
---         y = y + (tileSize / 4)
---     end
--- end

@@ -1,5 +1,6 @@
 CursorManager = Class()
 
+
 function CursorManager:init()
     self.cursor = {
         row = 1,

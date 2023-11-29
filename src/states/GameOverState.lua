@@ -1,5 +1,6 @@
 GameOverState = Class { __includes = BaseState }
 
+
 function GameOverState:init()
     Chain(State:fade(0))()
 end

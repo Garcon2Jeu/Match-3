@@ -1,5 +1,6 @@
 StateManager = Class {}
 
+
 function StateManager:init(states)
     self.states = states or {}
     self.current = BaseState()

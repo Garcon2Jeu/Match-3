@@ -1,5 +1,6 @@
 Tile = Class {}
 
+
 function Tile:init(x, y, color, pattern, row, column, shiny)
     self.x       = x
     self.y       = y
@@ -60,7 +61,4 @@ end
 
 function Tile:setSelected(select)
     self.selected = select
-end
-
-function Tile:particleSystem()
 end
