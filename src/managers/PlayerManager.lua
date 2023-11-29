@@ -14,7 +14,7 @@ function PlayerManager:init()
     self.level = 0
     self.goal  = 0
     self:levelUp()
-    self.timer = 60
+    self.timer = 300
 
 
     self.cursor = {
@@ -23,24 +23,6 @@ function PlayerManager:init()
     }
 
     self.selected = nil
-end
-
-function PlayerManager:slideContainer()
-    Timer.tween(.25, {
-        [container] = { x = 16 }
-    })
-end
-
-function PlayerManager:startCountdown()
-    self.countdown =
-        Timer.every(1,
-            function()
-                self.timer = self.timer - 1
-
-                if self.timer <= 15 then
-                    Assets.audio["clock"]:play()
-                end
-            end)
 end
 
 function PlayerManager:update(dt)
@@ -89,6 +71,28 @@ function PlayerManager:moveCursor()
         self.cursor.row = self.cursor.row - 1 < 1 and 8 or self.cursor.row - 1
         Assets.audio["select"]:play()
     end
+end
+
+function PlayerManager:slideContainer()
+    Timer.tween(.25, {
+        [container] = { x = 16 }
+    })
+end
+
+function PlayerManager:startCountdown()
+    self.countdown =
+        Timer.every(1,
+            function()
+                self.timer = self.timer - 1
+
+                if self.timer <= 15 then
+                    Assets.audio["clock"]:play()
+                end
+            end)
+end
+
+function PlayerManager:removeCountDown()
+    self.countdown:remove()
 end
 
 function PlayerManager:selectTile()
@@ -142,7 +146,9 @@ end
 
 function PlayerManager:addToScore(matches)
     for key, match in pairs(matches) do
-        self.score = self.score + #match * 50
+        for key, tile in pairs(match) do
+            self.score = self.score + tile.pattern * 50
+        end
     end
 end
 
@@ -165,4 +171,8 @@ function PlayerManager:addBonusTime(matches)
             self.timer = self.timer + 1
         end
     end
+end
+
+function PlayerManager:resetTimer()
+    self.timer = 60
 end

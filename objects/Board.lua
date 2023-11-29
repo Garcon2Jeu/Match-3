@@ -4,8 +4,8 @@ local boardSize = 8
 local xOffset = CENTER_WIDTH - 16
 local yOffset = 16
 
-function Board:init()
-    self.grid = self.factory(xOffset, yOffset)
+function Board:init(level)
+    self.grid = self.factory(xOffset, yOffset, level)
 end
 
 function Board:draw(board)
@@ -16,8 +16,9 @@ function Board:draw(board)
     end
 end
 
-function Board.factory(xOffset, yOffset)
+function Board.factory(xOffset, yOffset, level)
     local board = {}
+    local maxPattern = level or 1
 
     for row = 1, boardSize do
         local gridRow = {}
@@ -27,7 +28,7 @@ function Board.factory(xOffset, yOffset)
                     xOffset + 32 * (column - 1),
                     yOffset + 32 * (row - 1),
                     math.random(Atlas.getTotalColors()),
-                    1,
+                    math.random(maxPattern),
                     row,
                     column
                 ))

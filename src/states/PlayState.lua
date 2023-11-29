@@ -36,10 +36,8 @@ function PlayState:update(dt)
 
     if self:isSwapPossible() then
         Chain(
-            App:chainEnableInput(false),
             self:SwapTiles(),
-            self:RemoveDropReplaceTiles(),
-            App:chainEnableInput(true)
+            self:RemoveDropReplaceTiles()
         )()
     else
         Assets.audio["error"]:play()
@@ -52,21 +50,24 @@ function PlayState:draw()
 end
 
 function PlayState:exit()
-    self.player.countdown:remove()
+    self.player:removeCountDown()
+    self.player:resetTimer()
 end
 
 function PlayState:isSwapPossible()
     return
         self.player.selected
         and not self.player:isSameTileSelected()
-        and self.board:areTilesAdjacent(
-            self.player.selected,
-            self.player.cursor
-        )
+    -- and self.board:areTilesAdjacent(
+    --     self.player.selected,
+    --     self.player.cursor
+    -- )
 end
 
 function PlayState:SwapTiles()
     return function(next)
+        App:enableInput(false)
+
         local tweeningData = self.board:swapTiles(
             self.player.selected,
             self.player.cursor
@@ -78,11 +79,12 @@ function PlayState:SwapTiles()
 end
 
 function PlayState:RemoveDropReplaceTiles()
-    return function(next)
+    return function()
         local matches = self.board:getAllMatches()
 
         if #matches < 1 then
-            return next
+            App:enableInput(true)
+            return
         end
 
         Assets.audio["match"]:play()
@@ -91,6 +93,6 @@ function PlayState:RemoveDropReplaceTiles()
         self.board:removeMatches(matches)
         local tweeningData = self.board:dropReplaceTiles(matches)
 
-        Timer.tween(.25, tweeningData):finish(self:RemoveDropReplaceTiles()):finish(next)
+        Timer.tween(.25, tweeningData):finish(self:RemoveDropReplaceTiles())
     end
 end

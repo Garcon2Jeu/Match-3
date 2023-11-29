@@ -5,11 +5,11 @@ local slidePause = 1.5
 
 function NewGameState:init()
     self.levelCardY = -100
-    self.board = Board()
 end
 
 function NewGameState:enter(params)
     self.player = params or PlayerManager()
+    self.board = Board(self.player.level)
 
     Chain(
         State:fade(0),
