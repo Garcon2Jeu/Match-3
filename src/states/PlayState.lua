@@ -4,15 +4,20 @@ local swapTime = .25
 local dropTime = .25
 
 
+function PlayState:init(params)
+    self.cursor = CursorManager()
+end
+
 function PlayState:enter(params)
     self.board = params.board
     self.player = params.player
+
     self.player:slideContainer()
     self.player:startCountdown()
 end
 
 function PlayState:update(dt)
-    self.player:update(dt)
+    self.cursor:update(dt)
     self.board:update(dt)
 
     if self.player:hasReachedGoal() then
@@ -50,7 +55,8 @@ end
 
 function PlayState:draw()
     self.board:draw()
-    self.player:draw(self.board)
+    self.player:draw()
+    self.cursor:draw(self.board)
 end
 
 function PlayState:exit()
@@ -60,14 +66,14 @@ end
 
 function PlayState:isSwapPossible()
     return
-        self.player.selected
-        and not self.player:isSameTileSelected()
+        self.cursor.selected
+        and not self.cursor:isSameTileSelected()
 
-    ------------------------------------------------------DEBUG-------------------------------------------------------------------
-    -- and self.board:areTilesAdjacent(
-    --     self.player.selected,
-    --     self.player.cursor
-    -- )
+        ------------------------------------------------------DEBUG-------------------------------------------------------------------
+        and self.board:areTilesAdjacent(
+            self.cursor.selected,
+            self.cursor.cursor
+        )
     ------------------------------------------------------DEBUG-------------------------------------------------------------------
 end
 
@@ -76,10 +82,10 @@ function PlayState:SwapTiles()
         App:enableInput(false)
 
         local tweeningData = self.board:swapTiles(
-            self.player.selected,
-            self.player.cursor
+            self.cursor.selected,
+            self.cursor.cursor
         )
-        self.player:unselect()
+        self.cursor:unselect()
 
         Timer.tween(swapTime, tweeningData):finish(next)
     end

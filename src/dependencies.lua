@@ -7,12 +7,13 @@ Chain = require "src.libraries.knife.chain"
 
 App = require "src.App"
 
-require "src.managers.StateManager"
 Assets = require "src.managers.AssetsManager"
 Atlas = require "src.managers.AtlasManager"
+Match = require "src.managers.MatchManager"
+require "src.managers.CursorManager"
+require "src.managers.StateManager"
 require "src.managers.PlayerManager"
 require "src.managers.ParticleManager"
-Match = require "src.managers.MatchManager"
 
 require "src.states.BaseState"
 require "src.states.StartState"
