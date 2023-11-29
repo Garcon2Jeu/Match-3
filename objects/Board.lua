@@ -26,7 +26,10 @@ end
 
 function Board.factory(xOffset, yOffset, level)
     local board = {}
+
     local maxPattern = level or 1
+    -- local color = math.random(Atlas.getTotalColors())
+    -- color = color % 2 == 1 and color or color - 1
 
     for row = 1, boardSize do
         local gridRow = {}
@@ -102,6 +105,8 @@ function Board:getAllMatches(grid)
         table.insert(totalMatches, match)
     end
 
+    totalMatches = self:getShinyMatches(totalMatches)
+
     return totalMatches
 end
 
@@ -137,6 +142,27 @@ function Board:getMatchesBy(direction, grid)
     end
 
     return totalMatches
+end
+
+function Board:getShinyMatches(matches)
+    for index, match in ipairs(matches) do
+        for key, tile in pairs(match) do
+            if tile.shiny then
+                local shinyMatch = {}
+
+                for column = 1, boardSize do
+                    table.insert(shinyMatch, self.grid[tile.row][column])
+                end
+
+                table.remove(matches, index)
+                table.insert(matches, shinyMatch)
+                goto continue
+            end
+        end
+        ::continue::
+    end
+
+    return matches
 end
 
 function Board:removeMatches(matches)
@@ -175,6 +201,7 @@ function Board:dropReplaceTiles(matches)
                     self.grid[row][emptyTile.column].y = -AtlasManager.getTileSize()
                     self.grid[row][emptyTile.column].row = row
                     self.grid[row][emptyTile.column].color = math.random(Atlas.getTotalColors())
+                    -- self.grid[row][emptyTile.column].shiny = math.random(32)
                 end
 
                 tweeningData[self.grid[row][emptyTile.column]] = {
