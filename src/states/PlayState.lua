@@ -84,6 +84,7 @@ function PlayState:RemoveDropReplaceTiles()
 
         Assets.audio["match"]:play()
         self.player:addToScore(matches)
+        self.player:addBonusTime(matches)
         self.board:removeMatches(matches)
         local tweeningData = self.board:dropReplaceTiles(matches)
 

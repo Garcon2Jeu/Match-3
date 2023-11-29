@@ -14,9 +14,10 @@ function PlayerManager:init()
     self.level = 0
     self.goal  = 0
     self:levelUp()
-    self.timer    = 300
+    self.timer = 60
 
-    self.cursor   = {
+
+    self.cursor = {
         row = 1,
         column = 1
     }
@@ -36,7 +37,7 @@ function PlayerManager:startCountdown()
             function()
                 self.timer = self.timer - 1
 
-                if self.timer <= 60 then
+                if self.timer <= 15 then
                     Assets.audio["clock"]:play()
                 end
             end)
@@ -156,4 +157,12 @@ end
 function PlayerManager:levelUp()
     self.level = self.level + 1
     self.goal = self.level * 1.25 * 1000
+end
+
+function PlayerManager:addBonusTime(matches)
+    for key, match in pairs(matches) do
+        for key, tile in pairs(match) do
+            self.timer = self.timer + 1
+        end
+    end
 end
