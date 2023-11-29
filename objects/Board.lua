@@ -48,7 +48,7 @@ function Board.factory(xOffset, yOffset, level)
         table.insert(board, gridRow)
     end
 
-    if #Board:getAllMatches(board) > 0 then
+    if #Match:getAllMatches(board) > 0 then
         board = Board.factory(xOffset, yOffset)
     end
 
@@ -96,81 +96,6 @@ function Board:swapTiles(tile1, tile2)
     }
 
     return tweeningData
-end
-
-function Board:getAllMatches(grid)
-    local totalMatches = self:getMatchesBy("row", grid)
-
-    for key, match in pairs(self:getMatchesBy("column", grid)) do
-        table.insert(totalMatches, match)
-    end
-
-    totalMatches = self:getShinyMatches(totalMatches)
-
-    return totalMatches
-end
-
-function Board:getMatchesBy(direction, grid)
-    local totalMatches = {}
-
-    grid = grid or self.grid
-
-    for i = 1, 8 do
-        local row = direction == "row" and i or 1
-        local column = direction == "column" and i or 1
-
-        local currentMatch = { grid[row][column] }
-
-        for j = 2, 8 do
-            row = direction == "row" and row or j
-            column = direction == "column" and column or j
-
-            if currentMatch[1].color == grid[row][column].color then
-                table.insert(currentMatch, grid[row][column])
-            else
-                if #currentMatch >= 3 then
-                    table.insert(totalMatches, currentMatch)
-                end
-
-                currentMatch = { grid[row][column] }
-            end
-        end
-
-        if #currentMatch >= 3 then
-            table.insert(totalMatches, currentMatch)
-        end
-    end
-
-    return totalMatches
-end
-
-function Board:getShinyMatches(matches)
-    for index, match in ipairs(matches) do
-        for key, tile in pairs(match) do
-            if tile.shiny then
-                local shinyMatch = {}
-
-                for column = 1, boardSize do
-                    table.insert(shinyMatch, self.grid[tile.row][column])
-                end
-
-                table.remove(matches, index)
-                table.insert(matches, shinyMatch)
-                goto continue
-            end
-        end
-        ::continue::
-    end
-
-    return matches
-end
-
-function Board:removeMatches(matches)
-    for key, match in pairs(matches) do
-        for key, tile in pairs(match) do
-            self.grid[tile.row][tile.column] = nil
-        end
-    end
 end
 
 function Board:dropReplaceTiles(matches)

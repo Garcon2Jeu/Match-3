@@ -12,6 +12,7 @@ Assets = require "src.managers.AssetsManager"
 Atlas = require "src.managers.AtlasManager"
 require "src.managers.PlayerManager"
 require "src.managers.ParticleManager"
+Match = require "src.managers.MatchManager"
 
 require "src.states.BaseState"
 require "src.states.StartState"

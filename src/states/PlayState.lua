@@ -1,5 +1,8 @@
 PlayState = Class { __includes = BaseState }
 
+local swapTime = .25
+local dropTime = .25
+
 
 function PlayState:enter(params)
     self.board = params.board
@@ -78,13 +81,13 @@ function PlayState:SwapTiles()
         )
         self.player:unselect()
 
-        Timer.tween(.25, tweeningData):finish(next)
+        Timer.tween(swapTime, tweeningData):finish(next)
     end
 end
 
 function PlayState:RemoveDropReplaceTiles()
     return function()
-        local matches = self.board:getAllMatches()
+        local matches = Match:getAllMatches(self.board.grid)
 
         if #matches < 1 then
             App:enableInput(true)
@@ -94,9 +97,9 @@ function PlayState:RemoveDropReplaceTiles()
         Assets.audio["match"]:play()
         self.player:addToScore(matches)
         self.player:addBonusTime(matches)
-        self.board:removeMatches(matches)
+        self.board.grid = Match.removeMatches(self.board.grid, matches)
         local tweeningData = self.board:dropReplaceTiles(matches)
 
-        Timer.tween(.25, tweeningData):finish(self:RemoveDropReplaceTiles())
+        Timer.tween(dropTime, tweeningData):finish(self:RemoveDropReplaceTiles())
     end
 end
