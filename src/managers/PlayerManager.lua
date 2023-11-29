@@ -20,6 +20,7 @@ function PlayerManager:init()
         row = 1,
         column = 1
     }
+
     self.selected = nil
 end
 
@@ -34,6 +35,7 @@ function PlayerManager:startCountdown()
         Timer.every(1,
             function()
                 self.timer = self.timer - 1
+
                 if self.timer <= 60 then
                     Assets.audio["clock"]:play()
                 end

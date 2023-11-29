@@ -28,17 +28,14 @@ function GameOverState:draw()
 
     Assets.fonts.setHuge()
 
-    -- Text Drop Shadow
     Assets.colors.setWhite()
     love.graphics.printf("GAME OVER", 0, CENTER_HEIGHT - 78, VIRTUAL_WIDTH, "center")
 
 
     Assets.fonts.setLarge()
-    -- love.graphics.printf("Final Score: " .. tostring(self.player.score), 0, CENTER_HEIGHT + 20, VIRTUAL_WIDTH, "center")
     love.graphics.printf("Final Score: " .. tostring(self.score), 0, CENTER_HEIGHT, VIRTUAL_WIDTH, "center")
 
     Assets.colors.setBlue()
     Assets.fonts.setMedium()
-    -- love.graphics.printf("Final Score: " .. tostring(self.player.score), 0, CENTER_HEIGHT + 20, VIRTUAL_WIDTH, "center")
     love.graphics.printf("Press Enter to restart", 0, CENTER_HEIGHT + 100, VIRTUAL_WIDTH, "center")
 end
