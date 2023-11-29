@@ -5,6 +5,7 @@ function App:init()
     self.setupWindow()
 
     self.keysPressed = {}
+    self.canInput = true
 end
 
 function App:update()
@@ -23,7 +24,11 @@ function App.setupWindow()
 end
 
 function App:wasKeyPressed(key)
-    return self.keysPressed[key]
+    if self.canInput then
+        return self.keysPressed[key]
+    end
+
+    return self.canInput
 end
 
 function App:quit()
@@ -34,6 +39,17 @@ end
 
 function App:flushKeys()
     self.keysPressed = {}
+end
+
+function App:enableInput(bool)
+    self.canInput = bool
+end
+
+function App:chainEnableInput(bool)
+    return function(next)
+        self:enableInput(bool)
+        return next
+    end
 end
 
 return App()
