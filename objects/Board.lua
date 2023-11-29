@@ -8,6 +8,14 @@ function Board:init(level)
     self.grid = self.factory(xOffset, yOffset, level)
 end
 
+function Board:update(dt)
+    for key, row in pairs(self.grid) do
+        for key, tile in pairs(row) do
+            tile:update(dt)
+        end
+    end
+end
+
 function Board:draw(board)
     for key, row in pairs(board or self.grid) do
         for key, tile in pairs(row) do
@@ -30,7 +38,8 @@ function Board.factory(xOffset, yOffset, level)
                     math.random(Atlas.getTotalColors()),
                     math.random(maxPattern),
                     row,
-                    column
+                    column,
+                    math.random(32) == 1
                 ))
         end
         table.insert(board, gridRow)

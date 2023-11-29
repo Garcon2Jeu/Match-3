@@ -1,10 +1,15 @@
 Tile = Class {}
 
-function Tile:init(x, y, color, pattern, row, column)
-    self.x           = x
-    self.y           = y
-    self.color       = color
-    self.pattern     = pattern
+function Tile:init(x, y, color, pattern, row, column, shiny)
+    self.x       = x
+    self.y       = y
+    self.color   = color
+    self.pattern = pattern
+    self.shiny   = shiny
+
+    if self.shiny then
+        self.particles = ParticleManager()
+    end
 
     self.highlighted = false
     self.selected    = false
@@ -14,7 +19,11 @@ function Tile:init(x, y, color, pattern, row, column)
     self.drawn       = true
 end
 
-function Tile:update(dt) end
+function Tile:update(dt)
+    if self.shiny then
+        self.particles:update(dt)
+    end
+end
 
 function Tile:draw()
     if not self.drawn then
@@ -36,6 +45,13 @@ function Tile:draw()
     end
 
     Assets.colors.reset()
+
+    if self.shiny then
+        self.particles:draw(
+            self.x + Atlas.getTileSize() / 2,
+            self.y + Atlas.getTileSize() / 2
+        )
+    end
 end
 
 function Tile:setHighlighted(highlight)
@@ -44,4 +60,7 @@ end
 
 function Tile:setSelected(select)
     self.selected = select
+end
+
+function Tile:particleSystem()
 end

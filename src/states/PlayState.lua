@@ -10,6 +10,7 @@ end
 
 function PlayState:update(dt)
     self.player:update(dt)
+    self.board:update(dt)
 
     if self.player:hasReachedGoal() then
         Assets.audio["next-level"]:play()
@@ -58,10 +59,13 @@ function PlayState:isSwapPossible()
     return
         self.player.selected
         and not self.player:isSameTileSelected()
+
+    ------------------------------------------------------DEBUG-------------------------------------------------------------------
     -- and self.board:areTilesAdjacent(
     --     self.player.selected,
     --     self.player.cursor
     -- )
+    ------------------------------------------------------DEBUG-------------------------------------------------------------------
 end
 
 function PlayState:SwapTiles()

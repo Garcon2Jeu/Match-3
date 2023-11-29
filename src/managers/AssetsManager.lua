@@ -11,6 +11,7 @@ function AssetsManager.getGraphics()
     return {
         ["background"] = love.graphics.newImage("assets/graphics/background.png"),
         ["match3"]     = love.graphics.newImage("assets/graphics/match3.png"),
+        ["star"]       = love.graphics.newImage("assets/graphics/star.png"),
     }
 end
 
