@@ -87,4 +87,25 @@ function MatchManager.willMatch(grid, tile1, tile2)
     return #totalMatches > 0
 end
 
+function MatchManager.isMatchAvailable(grid)
+    for row = 1, #grid do
+        for column = 1, 8 do
+            local tileCenter = { row = row, column = column }
+            local tileNorth = { row = row - 1, column = column }
+            local tileSouth = { row = row + 1, column = column }
+            local tileEast = { row = row, column = column - 1 }
+            local tileWest = { row = row, column = column + 1 }
+
+            if tileNorth.row >= 1 and MatchManager.willMatch(grid, tileCenter, tileNorth)
+                or tileSouth.row <= 8 and MatchManager.willMatch(grid, tileCenter, tileSouth)
+                or tileEast.column >= 1 and MatchManager.willMatch(grid, tileCenter, tileEast)
+                or tileWest.column <= 8 and MatchManager.willMatch(grid, tileCenter, tileWest) then
+                return true
+            end
+        end
+    end
+
+    return false
+end
+
 return MatchManager

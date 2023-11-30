@@ -29,7 +29,7 @@ function Board:draw(board)
 end
 
 function Board.factory(xOffset, yOffset, level)
-    local board = {}
+    local grid = {}
 
     local maxPattern = level
         and level <= 6 and level or 6
@@ -49,14 +49,15 @@ function Board.factory(xOffset, yOffset, level)
                     math.random(32) == 1
                 ))
         end
-        table.insert(board, gridRow)
+        table.insert(grid, gridRow)
     end
 
-    if #Match:getAllMatches(board) > 0 then
-        board = Board.factory(xOffset, yOffset, level)
+    if #Match:getAllMatches(grid) > 0
+        or not Match.isMatchAvailable(grid) then
+        grid = Board.factory(xOffset, yOffset, level)
     end
 
-    return board
+    return grid
 end
 
 function Board:areTilesAdjacent(tile1, tile2)
