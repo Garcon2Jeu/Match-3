@@ -5,7 +5,7 @@ local swapTime = .25
 local dropTime = .25
 
 
-function PlayState:init(params)
+function PlayState:init()
     self.cursor = CursorManager()
 end
 
@@ -18,39 +18,23 @@ function PlayState:enter(params)
 end
 
 function PlayState:update(dt)
-    self.cursor:update(dt, self.board.grid)
     self.board:update(dt)
+    self.cursor:update(dt, self.board.grid)
 
-    if self.player:hasReachedGoal() then
-        Assets.audio["next-level"]:play()
-        self.player:levelUp()
+    self:reachGoal()
+    self:reachTimeLimit()
 
-        Chain(
-            State:fade(1),
-            State:chainChange("newGame", self.player)
-        )()
-    end
-
-    if self.player:hasReachedTimeLimit() then
-        Assets.audio["game-over"]:play()
-
-        Chain(
-            State:fade(1),
-            State:chainChange("over", self.player.score)
-        )()
-    end
-
-    if not App:wasKeyPressed("return") then
+    if not App:wasKeyPressed("space")
+        and not App:wasMousePressed("1") then
         return
     end
 
-    if self:isSwapPossible() then
-        Chain(
-            self:SwapTiles(),
-            self:RemoveDropReplaceTiles()
-        )()
+    if not self.cursor:isTileSelected() then
+        self.cursor:selectTile()
+    elseif self.cursor:isSameTileSelected() then
+        self.cursor:unselectTile()
     else
-        Assets.audio["error"]:play()
+        self:swap()
     end
 end
 
@@ -63,6 +47,40 @@ end
 function PlayState:exit()
     self.player:removeCountDown()
     self.player:resetTimer()
+end
+
+function PlayState:reachGoal()
+    if self.player:hasReachedGoal() then
+        Assets.audio["next-level"]:play()
+        self.player:levelUp()
+
+        Chain(
+            State:fade(1),
+            State:chainChange("newGame", self.player)
+        )()
+    end
+end
+
+function PlayState:reachTimeLimit()
+    if self.player:hasReachedTimeLimit() then
+        Assets.audio["game-over"]:play()
+
+        Chain(
+            State:fade(1),
+            State:chainChange("over", self.player.score)
+        )()
+    end
+end
+
+function PlayState:swap()
+    if self:isSwapPossible() then
+        Chain(
+            self:SwapTiles(),
+            self:RemoveDropReplaceTiles()
+        )()
+    else
+        Assets.audio["error"]:play()
+    end
 end
 
 function PlayState:isSwapPossible()
@@ -86,7 +104,7 @@ function PlayState:SwapTiles()
             self.cursor.selected,
             self.cursor.cursor
         )
-        self.cursor:unselect()
+        self.cursor:unselectTile()
 
         Timer.tween(swapTime, tweeningData):finish(next)
     end

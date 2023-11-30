@@ -10,7 +10,6 @@ end
 function CursorManager:update(dt, grid)
     self:moveCursorWithMouse(grid)
     self:moveCursorWithKeys()
-    self:selectTile()
 end
 
 function CursorManager:draw(board)
@@ -49,19 +48,14 @@ function CursorManager:moveCursorWithKeys()
 end
 
 function CursorManager:selectTile()
-    if not App:wasKeyPressed("space") and not App:wasMousePressed("1") then
-        return
-    end
-
-    if self:isSameTileSelected() then
-        self:unselect()
-        return
-    end
-
     self.selected = {
         row = self.cursor.row,
         column = self.cursor.column
     }
+end
+
+function CursorManager:isTileSelected()
+    return self.selected
 end
 
 function CursorManager:isSameTileSelected()
@@ -70,7 +64,7 @@ function CursorManager:isSameTileSelected()
         and self.cursor.column == self.selected.column
 end
 
-function CursorManager:unselect()
+function CursorManager:unselectTile()
     self.selected = nil
 end
 
