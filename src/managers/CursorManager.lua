@@ -2,16 +2,14 @@ CursorManager = Class()
 
 
 function CursorManager:init()
-    self.cursor = {
-        row = 1,
-        column = 1
-    }
-
     self.selected = nil
+    self.cursor   = { row = 1, column = 1 }
+    self.mouse    = { x = 0, y = 0 }
 end
 
-function CursorManager:update(dt)
-    self:moveCursor()
+function CursorManager:update(dt, grid)
+    self:moveCursorWithMouse(grid)
+    self:moveCursorWithKeys()
     self:selectTile()
 end
 
@@ -20,7 +18,21 @@ function CursorManager:draw(board)
     self:drawSelected(board)
 end
 
-function CursorManager:moveCursor()
+function CursorManager:moveCursorWithMouse(grid)
+    self.mouse.x, self.mouse.y = Push:toGame(love.mouse.getPosition())
+
+    for key, row in pairs(grid) do
+        for key, tile in pairs(row) do
+            if self.mouse.x > tile.x and self.mouse.x < tile.x + 32
+                and self.mouse.y > tile.y and self.mouse.y < tile.y + 32 then
+                self.cursor.row = tile.row
+                self.cursor.column = tile.column
+            end
+        end
+    end
+end
+
+function CursorManager:moveCursorWithKeys()
     if App:wasKeyPressed("right") then
         self.cursor.column = self.cursor.column + 1 > 8 and 1 or self.cursor.column + 1
         Assets.audio["select"]:play()
@@ -37,7 +49,7 @@ function CursorManager:moveCursor()
 end
 
 function CursorManager:selectTile()
-    if not App:wasKeyPressed("space") then
+    if not App:wasKeyPressed("space") and not App:wasMousePressed("1") then
         return
     end
 

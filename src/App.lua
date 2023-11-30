@@ -6,12 +6,14 @@ function App:init()
     self.setupWindow()
 
     self.keysPressed = {}
+    self.mousePressed = {}
     self.canInput = true
 end
 
 function App:update()
     self:quit()
     self:flushKeys()
+    self:flushButtons()
 end
 
 function App.setupWindow()
@@ -32,6 +34,14 @@ function App:wasKeyPressed(key)
     return self.canInput
 end
 
+function App:wasMousePressed(button)
+    if self.canInput then
+        return self.mousePressed[button]
+    end
+
+    return self.canInput
+end
+
 function App:quit()
     if self:wasKeyPressed("escape") then
         love.event.quit()
@@ -40,6 +50,10 @@ end
 
 function App:flushKeys()
     self.keysPressed = {}
+end
+
+function App:flushButtons()
+    self.mousePressed = {}
 end
 
 function App:enableInput(bool)

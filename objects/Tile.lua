@@ -62,6 +62,3 @@ end
 function Tile:setSelected(select)
     self.selected = select
 end
-
---If there are no matches available to perform, reset the board.
--- Reduce number of colors

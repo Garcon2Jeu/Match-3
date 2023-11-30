@@ -18,7 +18,7 @@ function PlayState:enter(params)
 end
 
 function PlayState:update(dt)
-    self.cursor:update(dt)
+    self.cursor:update(dt, self.board.grid)
     self.board:update(dt)
 
     if self.player:hasReachedGoal() then

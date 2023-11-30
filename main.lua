@@ -31,3 +31,7 @@ end
 function love.keypressed(key)
     App.keysPressed[key] = true
 end
+
+function love.mousepressed(x, y, button, istouch, presses)
+    App.mousePressed[tostring(button)] = true
+end
