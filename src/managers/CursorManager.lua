@@ -23,8 +23,8 @@ function CursorManager:moveCursorWithMouse(grid)
 
     for key, row in pairs(grid) do
         for key, tile in pairs(row) do
-            if self.mouse.x > tile.x and self.mouse.x < tile.x + 32
-                and self.mouse.y > tile.y and self.mouse.y < tile.y + 32 then
+            if self.mouse.x > tile.x and self.mouse.x < tile.x + TILESIZE
+                and self.mouse.y > tile.y and self.mouse.y < tile.y + TILESIZE then
                 self.cursor.row = tile.row
                 self.cursor.column = tile.column
             end
@@ -34,16 +34,16 @@ end
 
 function CursorManager:moveCursorWithKeys()
     if App:wasKeyPressed("right") then
-        self.cursor.column = self.cursor.column + 1 > 8 and 1 or self.cursor.column + 1
+        self.cursor.column = self.cursor.column + 1 > BOARDSIZE and 1 or self.cursor.column + 1
         Assets.audio["select"]:play()
     elseif App:wasKeyPressed("left") then
-        self.cursor.column = self.cursor.column - 1 < 1 and 8 or self.cursor.column - 1
+        self.cursor.column = self.cursor.column - 1 < 1 and BOARDSIZE or self.cursor.column - 1
         Assets.audio["select"]:play()
     elseif App:wasKeyPressed("down") then
-        self.cursor.row = self.cursor.row + 1 > 8 and 1 or self.cursor.row + 1
+        self.cursor.row = self.cursor.row + 1 > BOARDSIZE and 1 or self.cursor.row + 1
         Assets.audio["select"]:play()
     elseif App:wasKeyPressed("up") then
-        self.cursor.row = self.cursor.row - 1 < 1 and 8 or self.cursor.row - 1
+        self.cursor.row = self.cursor.row - 1 < 1 and BOARDSIZE or self.cursor.row - 1
         Assets.audio["select"]:play()
     end
 end
@@ -80,7 +80,7 @@ function CursorManager:drawCursor(board)
     love.graphics.rectangle("line",
         board.grid[self.cursor.row][self.cursor.column].x,
         board.grid[self.cursor.row][self.cursor.column].y,
-        32, 32, 4)
+        TILESIZE, TILESIZE, 4)
     Assets.colors.reset()
 end
 
@@ -93,6 +93,6 @@ function CursorManager:drawSelected(board)
     love.graphics.rectangle("fill",
         board.grid[self.selected.row][self.selected.column].x,
         board.grid[self.selected.row][self.selected.column].y,
-        32, 32, 4)
+        TILESIZE, TILESIZE, 4)
     Assets.colors.reset()
 end

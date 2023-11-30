@@ -16,13 +16,13 @@ end
 function MatchManager.getMatchesBy(grid, direction)
     local totalMatches = {}
 
-    for i = 1, 8 do
+    for i = 1, BOARDSIZE do
         local row = direction == "row" and i or 1
         local column = direction == "column" and i or 1
 
         local currentMatch = { grid[row][column] }
 
-        for j = 2, 8 do
+        for j = 2, BOARDSIZE do
             row = direction == "row" and row or j
             column = direction == "column" and column or j
 
@@ -89,7 +89,7 @@ end
 
 function MatchManager.isMatchAvailable(grid)
     for row = 1, #grid do
-        for column = 1, 8 do
+        for column = 1, BOARDSIZE do
             local tileCenter = { row = row, column = column }
             local tileNorth = { row = row - 1, column = column }
             local tileSouth = { row = row + 1, column = column }
@@ -97,9 +97,9 @@ function MatchManager.isMatchAvailable(grid)
             local tileWest = { row = row, column = column + 1 }
 
             if tileNorth.row >= 1 and MatchManager.willMatch(grid, tileCenter, tileNorth)
-                or tileSouth.row <= 8 and MatchManager.willMatch(grid, tileCenter, tileSouth)
+                or tileSouth.row <= BOARDSIZE and MatchManager.willMatch(grid, tileCenter, tileSouth)
                 or tileEast.column >= 1 and MatchManager.willMatch(grid, tileCenter, tileEast)
-                or tileWest.column <= 8 and MatchManager.willMatch(grid, tileCenter, tileWest) then
+                or tileWest.column <= BOARDSIZE and MatchManager.willMatch(grid, tileCenter, tileWest) then
                 return true
             end
         end

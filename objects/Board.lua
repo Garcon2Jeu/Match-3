@@ -1,7 +1,6 @@
 Board = Class {}
 
 
-local boardSize = 8
 local xOffset = CENTER_WIDTH - 16
 local yOffset = 16
 
@@ -35,18 +34,18 @@ function Board.factory(xOffset, yOffset, level)
         and level <= 6 and level or 6
         or 1
 
-    for row = 1, boardSize do
+    for row = 1, BOARDSIZE do
         local gridRow = {}
-        for column = 1, boardSize do
+        for column = 1, BOARDSIZE do
             table.insert(gridRow,
                 Tile(
-                    xOffset + 32 * (column - 1),
-                    yOffset + 32 * (row - 1),
+                    xOffset + TILESIZE * (column - 1),
+                    yOffset + TILESIZE * (row - 1),
                     Board.getRandomColor(),
                     math.random(maxPattern),
                     row,
                     column,
-                    math.random(32) == 1
+                    math.random(32) == 1 -- ???????????? Why 32?
                 ))
         end
         table.insert(grid, gridRow)
@@ -133,14 +132,14 @@ function Board:dropReplaceTiles(matches)
                     table.remove(tilesToDrop, 1)
                 else
                     self.grid[row][emptyTile.column] = emptyTile
-                    self.grid[row][emptyTile.column].y = -AtlasManager.getTileSize()
+                    self.grid[row][emptyTile.column].y = -TILESIZE
                     self.grid[row][emptyTile.column].row = row
                     self.grid[row][emptyTile.column].color = Board.getRandomColor()
                     -- self.grid[row][emptyTile.column].shiny = math.random(32)
                 end
 
                 tweeningData[self.grid[row][emptyTile.column]] = {
-                    y = AtlasManager.getTileSize() * (row - 1) + Board.getYoffset(),
+                    y = TILESIZE * (row - 1) + Board.getYoffset(),
                 }
 
                 row = row - 1

@@ -1,6 +1,5 @@
 Tile = Class {}
 
-
 function Tile:init(x, y, color, pattern, row, column, shiny)
     self.x       = x
     self.y       = y
@@ -37,20 +36,20 @@ function Tile:draw()
 
     if self.highlighted then
         Assets.colors.setYellow()
-        love.graphics.rectangle("line", self.x, self.y, Atlas.getTileSize(), Atlas.getTileSize(), 4)
+        love.graphics.rectangle("line", self.x, self.y, TILESIZE, TILESIZE, 4)
     end
 
     if self.selected then
         Assets.colors.setWhite(.7)
-        love.graphics.rectangle("fill", self.x, self.y, Atlas.getTileSize(), Atlas.getTileSize(), 4)
+        love.graphics.rectangle("fill", self.x, self.y, TILESIZE, TILESIZE, 4)
     end
 
     Assets.colors.reset()
 
     if self.shiny then
         self.particles:draw(
-            self.x + Atlas.getTileSize() / 2,
-            self.y + Atlas.getTileSize() / 2
+            self.x + TILESIZE / 2,
+            self.y + TILESIZE / 2
         )
     end
 end
