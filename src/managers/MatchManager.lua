@@ -76,4 +76,15 @@ function MatchManager.removeMatches(grid, matches)
     return grid
 end
 
+function MatchManager.willMatch(grid, tile1, tile2)
+    Board.swapTilesGridPosition(tile1, tile2, grid)
+
+    local totalMatches = Match:getAllMatches(grid)
+
+    Board.swapTilesGridPosition(tile1, tile2, grid)
+
+
+    return #totalMatches > 0
+end
+
 return MatchManager

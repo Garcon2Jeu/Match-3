@@ -63,6 +63,5 @@ function Tile:setSelected(select)
     self.selected = select
 end
 
---Only allow swapping when it results in a match.
 --If there are no matches available to perform, reset the board.
 -- Reduce number of colors

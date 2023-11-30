@@ -71,8 +71,11 @@ function PlayState:isSwapPossible()
         and not self.cursor:isSameTileSelected()
         and self.board:areTilesAdjacent(
             self.cursor.selected,
-            self.cursor.cursor
-        )
+            self.cursor.cursor)
+        and Match.willMatch(
+            self.board.grid,
+            self.cursor.selected,
+            self.cursor.cursor)
 end
 
 function PlayState:SwapTiles()

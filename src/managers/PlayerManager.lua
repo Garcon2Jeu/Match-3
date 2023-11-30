@@ -14,7 +14,7 @@ function PlayerManager:init()
     self.score = 0
     self.level = 0
     self.goal  = 0
-    self.timer = 60
+    self.timer = 300000
 
     self:levelUp()
 end

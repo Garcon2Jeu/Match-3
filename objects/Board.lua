@@ -6,7 +6,6 @@ local xOffset = CENTER_WIDTH - 16
 local yOffset = 16
 
 local allowedColors = { 1, 3, 6, 8, 10, 12, 15 }
-local maxPattern = 6
 
 
 function Board:init(level)
@@ -31,12 +30,10 @@ end
 
 function Board.factory(xOffset, yOffset, level)
     local board = {}
-    -- local pattern = 1
-    -- if level then
-    local pattern = level
+
+    local maxPattern = level
         and level <= 6 and level or 6
         or 1
-    -- end
 
     for row = 1, boardSize do
         local gridRow = {}
@@ -46,7 +43,7 @@ function Board.factory(xOffset, yOffset, level)
                     xOffset + 32 * (column - 1),
                     yOffset + 32 * (row - 1),
                     Board.getRandomColor(),
-                    math.random(pattern),
+                    math.random(maxPattern),
                     row,
                     column,
                     math.random(32) == 1
@@ -71,19 +68,18 @@ function Board:swapTiles(tile1, tile2)
     local tempRow, tempColumn =
         self.grid[tile1.row][tile1.column].row,
         self.grid[tile1.row][tile1.column].column
+
     self.grid[tile1.row][tile1.column].row,
     self.grid[tile1.row][tile1.column].column =
         self.grid[tile2.row][tile2.column].row,
         self.grid[tile2.row][tile2.column].column
+
     self.grid[tile2.row][tile2.column].row,
     self.grid[tile2.row][tile2.column].column =
         tempRow, tempColumn
 
 
-    -- Swap Grid Position
-    local tempTile = self.grid[tile1.row][tile1.column]
-    self.grid[tile1.row][tile1.column] = self.grid[tile2.row][tile2.column]
-    self.grid[tile2.row][tile2.column] = tempTile
+    self.swapTilesGridPosition(tile1, tile2, self.grid)
 
 
     -- Swap XY
@@ -103,6 +99,12 @@ function Board:swapTiles(tile1, tile2)
     }
 
     return tweeningData
+end
+
+function Board.swapTilesGridPosition(tile1, tile2, grid)
+    local tempTile = grid[tile1.row][tile1.column]
+    grid[tile1.row][tile1.column] = grid[tile2.row][tile2.column]
+    grid[tile2.row][tile2.column] = tempTile
 end
 
 function Board:dropReplaceTiles(matches)
