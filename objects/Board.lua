@@ -5,6 +5,9 @@ local boardSize = 8
 local xOffset = CENTER_WIDTH - 16
 local yOffset = 16
 
+local allowedColors = { 1, 3, 6, 8, 10, 12, 15 }
+local maxPattern = 6
+
 
 function Board:init(level)
     self.grid = self.factory(xOffset, yOffset, level)
@@ -28,10 +31,12 @@ end
 
 function Board.factory(xOffset, yOffset, level)
     local board = {}
-
-    local maxPattern = level or 1
-    -- local color = math.random(Atlas.getTotalColors())
-    -- color = color % 2 == 1 and color or color - 1
+    -- local pattern = 1
+    -- if level then
+    local pattern = level
+        and level <= 6 and level or 6
+        or 1
+    -- end
 
     for row = 1, boardSize do
         local gridRow = {}
@@ -40,8 +45,8 @@ function Board.factory(xOffset, yOffset, level)
                 Tile(
                     xOffset + 32 * (column - 1),
                     yOffset + 32 * (row - 1),
-                    math.random(Atlas.getTotalColors()),
-                    math.random(maxPattern),
+                    Board.getRandomColor(),
+                    math.random(pattern),
                     row,
                     column,
                     math.random(32) == 1
@@ -51,7 +56,7 @@ function Board.factory(xOffset, yOffset, level)
     end
 
     if #Match:getAllMatches(board) > 0 then
-        board = Board.factory(xOffset, yOffset)
+        board = Board.factory(xOffset, yOffset, level)
     end
 
     return board
@@ -127,7 +132,7 @@ function Board:dropReplaceTiles(matches)
                     self.grid[row][emptyTile.column] = emptyTile
                     self.grid[row][emptyTile.column].y = -AtlasManager.getTileSize()
                     self.grid[row][emptyTile.column].row = row
-                    self.grid[row][emptyTile.column].color = math.random(Atlas.getTotalColors())
+                    self.grid[row][emptyTile.column].color = Board.getRandomColor()
                     -- self.grid[row][emptyTile.column].shiny = math.random(32)
                 end
 
@@ -145,4 +150,8 @@ end
 
 function Board.getYoffset()
     return yOffset
+end
+
+function Board.getRandomColor()
+    return allowedColors[math.random(#allowedColors)]
 end
