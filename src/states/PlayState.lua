@@ -44,8 +44,18 @@ function PlayState:draw()
     self.cursor:draw(self.board)
 
     ------------------------------------------------------DEBUG-------------------------------------------------------------------
-    love.graphics.print(tostring(self.cursor.cursor.row), 50, 50)
-    love.graphics.print(tostring(self.cursor.cursor.column), 50, 70)
+    -- love.graphics.print(tostring(self.cursor.cursor.row), 50, 50)
+    -- love.graphics.print(tostring(self.cursor.cursor.column), 50, 70)
+
+    -- local direction = ""
+    -- local totalMatches = Match:getAllMatches(self.board.grid)
+
+    -- if #totalMatches > 0 then
+    --     direction = Match.getMatchDirection(totalMatches[1])
+    -- end
+
+    -- love.graphics.print(tostring(direction), 20, 70)
+
     ------------------------------------------------------DEBUG-------------------------------------------------------------------
 end
 

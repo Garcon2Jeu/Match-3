@@ -50,9 +50,13 @@ function MatchManager.getShinyMatches(grid, matches)
         for key, tile in pairs(match) do
             if tile.shiny then
                 local shinyMatch = {}
+                local matchDirection = Match.getDirection(match)
 
-                for column = 1, #grid do
-                    table.insert(shinyMatch, grid[tile.row][column])
+                for i = 1, #grid do
+                    local row = matchDirection == "row" and tile.row or i
+                    local column = matchDirection == "column" and tile.column or i
+
+                    table.insert(shinyMatch, grid[row][column])
                 end
 
                 table.remove(matches, index)
@@ -64,6 +68,17 @@ function MatchManager.getShinyMatches(grid, matches)
     end
 
     return matches
+end
+
+function MatchManager.getDirection(match)
+    local matchRow = match[1].row * #match
+    local matchRowTotal = 0
+
+    for key, tile in pairs(match) do
+        matchRowTotal = matchRowTotal + tile.row
+    end
+
+    return matchRowTotal == matchRow and "row" or "column"
 end
 
 function MatchManager.removeMatches(grid, matches)
