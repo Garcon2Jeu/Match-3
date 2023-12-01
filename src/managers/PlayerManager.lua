@@ -13,8 +13,8 @@ local container = {
 function PlayerManager:init()
     self.score = 0
     self.level = 0
-    self.goal  = 0
-    self.timer = 300000
+    self.goal  = 500
+    self.timer = 60
 
     self:levelUp()
 end
@@ -69,7 +69,12 @@ end
 function PlayerManager:addToScore(matches)
     for key, match in pairs(matches) do
         for key, tile in pairs(match) do
-            self.score = self.score + tile.pattern * 50
+            self.score = self.score + tile.pattern * 25
+
+            if self:hasReachedGoal() then
+                self.score = self.goal
+                return
+            end
         end
     end
 end
@@ -84,7 +89,7 @@ end
 
 function PlayerManager:levelUp()
     self.level = self.level + 1
-    self.goal = self.level * 1.25 * 1000
+    self.goal = self.goal + (self.level * 1000)
 end
 
 function PlayerManager:addBonusTime(matches)
