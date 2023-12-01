@@ -7,9 +7,7 @@ function Tile:init(x, y, color, pattern, row, column, shiny)
     self.pattern = pattern
     self.shiny   = shiny
 
-    if self.shiny then
-        self.particles = ParticleManager()
-    end
+    self:shine()
 
     self.highlighted = false
     self.selected    = false
@@ -60,4 +58,12 @@ end
 
 function Tile:setSelected(select)
     self.selected = select
+end
+
+function Tile:shine()
+    if self.shiny then
+        self.particles = ParticleManager()
+    else
+        self.particles = {}
+    end
 end

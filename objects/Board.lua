@@ -135,7 +135,8 @@ function Board:dropReplaceTiles(matches)
                     self.grid[row][emptyTile.column].y = -TILESIZE
                     self.grid[row][emptyTile.column].row = row
                     self.grid[row][emptyTile.column].color = Board.getRandomColor()
-                    -- self.grid[row][emptyTile.column].shiny = math.random(32)
+                    self.grid[row][emptyTile.column].shiny = math.random(32) == 1
+                    self.grid[row][emptyTile.column]:shine()
                 end
 
                 tweeningData[self.grid[row][emptyTile.column]] = {
