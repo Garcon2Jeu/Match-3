@@ -7,6 +7,7 @@ function love.load()
         ["newGame"] = function() return NewGameState() end,
         ["play"] = function() return PlayState() end,
         ["over"] = function() return GameOverState() end,
+        ["pause"] = function() return PauseState() end,
     }
 
     State:change("start")

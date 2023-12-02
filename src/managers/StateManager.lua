@@ -5,6 +5,7 @@ function StateManager:init(states)
     self.states = states or {}
     self.current = BaseState()
     self.alphaTransition = 0
+    self.paused = false
 end
 
 function StateManager:change(stateName, enterParams)
@@ -42,4 +43,15 @@ function StateManager:drawTransition()
     love.graphics.setColor(1, 1, 1, self.alphaTransition)
     love.graphics.rectangle("fill", 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
     Assets.colors.reset()
+end
+
+function StateManager:pause(state)
+    if self.paused then
+        self.paused = false
+        self.current = self.current.state
+        self.current.player:startCountdown()
+    else
+        self.paused = true
+        self:change("pause", state)
+    end
 end

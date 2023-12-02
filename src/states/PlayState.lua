@@ -18,6 +18,10 @@ function PlayState:enter(params)
 end
 
 function PlayState:update(dt)
+    if App:wasKeyPressed("p") then
+        State:pause(self)
+    end
+
     self.board:update(dt)
     self.cursor:update(dt, self.board.grid)
 
