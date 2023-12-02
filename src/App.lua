@@ -67,4 +67,20 @@ function App:chainEnableInput(bool)
     end
 end
 
+function App.flatten(tbl)
+    local flat = {}
+
+    for key, value in pairs(tbl) do
+        if type(value) == "table" then
+            for key, nestedValue in pairs(App.flatten(value)) do
+                table.insert(flat, nestedValue)
+            end
+        else
+            table.insert(flat, value)
+        end
+    end
+
+    return flat
+end
+
 return App()

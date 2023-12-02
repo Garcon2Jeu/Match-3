@@ -14,7 +14,7 @@ function PlayerManager:init()
     self.score = 0
     self.level = 0
     self.goal  = 500
-    self.timer = 3000000
+    self.timer = 60
 
     self:levelUp()
 end
@@ -94,9 +94,7 @@ end
 
 function PlayerManager:addBonusTime(matches)
     for key, match in pairs(matches) do
-        for key, tile in pairs(match) do
-            self.timer = self.timer + 1
-        end
+        self.timer = self.timer + 1
     end
 end
 

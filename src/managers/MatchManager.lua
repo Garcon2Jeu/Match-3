@@ -2,9 +2,9 @@ MatchManager = Class {}
 
 
 function MatchManager:getAllMatches(grid)
-    local totalMatches = self.getMatchesBy(grid, "row")
+    local totalMatches = self.getMatchesBy(grid, "column")
 
-    for key, match in pairs(self.getMatchesBy(grid, "column")) do
+    for key, match in pairs(self.getMatchesBy(grid, "row")) do
         table.insert(totalMatches, match)
     end
 
@@ -121,6 +121,33 @@ function MatchManager.isMatchAvailable(grid)
     end
 
     return false
+end
+
+function MatchManager.getLowestTiles(matches)
+    local lowestTiles = {}
+
+    for key, tile in pairs(MatchManager.flattenMatches(matches)) do
+        if lowestTiles[tile.column]
+            and tile.row > lowestTiles[tile.column].row then
+            lowestTiles[tile.column] = tile
+        else
+            lowestTiles[tile.column] = tile
+        end
+    end
+
+    return lowestTiles
+end
+
+function MatchManager.flattenMatches(matches)
+    local flattened = {}
+
+    for key, match in pairs(matches) do
+        for key, tile in pairs(match) do
+            table.insert(flattened, tile)
+        end
+    end
+
+    return flattened
 end
 
 return MatchManager

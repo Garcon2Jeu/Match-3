@@ -42,26 +42,10 @@ function PlayState:draw()
     self.board:draw()
     self.player:draw()
     self.cursor:draw(self.board)
-
-    ------------------------------------------------------DEBUG-------------------------------------------------------------------
-    -- love.graphics.print(tostring(self.cursor.cursor.row), 50, 50)
-    -- love.graphics.print(tostring(self.cursor.cursor.column), 50, 70)
-
-    -- local direction = ""
-    -- local totalMatches = Match:getAllMatches(self.board.grid)
-
-    -- if #totalMatches > 0 then
-    --     direction = Match.getMatchDirection(totalMatches[1])
-    -- end
-
-    -- love.graphics.print(tostring(direction), 20, 70)
-
-    ------------------------------------------------------DEBUG-------------------------------------------------------------------
 end
 
 function PlayState:exit()
     self.player:removeCountDown()
-    self.player:resetTimer()
 end
 
 function PlayState:reachGoal()
@@ -102,13 +86,13 @@ function PlayState:isSwapPossible()
     return
         self.cursor.selected
         and not self.cursor:isSameTileSelected()
-    -- and self.board:areTilesAdjacent(
-    --     self.cursor.selected,
-    --     self.cursor.cursor)
-    -- and Match.willMatch(
-    --     self.board.grid,
-    --     self.cursor.selected,
-    --     self.cursor.cursor)
+        and self.board:areTilesAdjacent(
+            self.cursor.selected,
+            self.cursor.cursor)
+        and Match.willMatch(
+            self.board.grid,
+            self.cursor.selected,
+            self.cursor.cursor)
 end
 
 function PlayState:SwapTiles()
