@@ -50,6 +50,7 @@ end
 
 function PlayState:exit()
     self.player:removeCountDown()
+    self.player:resetTimer()
 end
 
 function PlayState:reachGoal()

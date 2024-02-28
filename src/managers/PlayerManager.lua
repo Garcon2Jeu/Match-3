@@ -99,5 +99,5 @@ function PlayerManager:addBonusTime(matches)
 end
 
 function PlayerManager:resetTimer()
-    self.timer = 60
+    self.timer = self.timer + 30
 end
