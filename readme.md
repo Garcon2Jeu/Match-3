@@ -4,7 +4,7 @@ Pour la quatrième  semaine de la formation GD50 de l'université Harvard, l'obj
 
 Les sujets abordés sont les suivants:
 
-- Les feuilles de Sprite et les Quads
+- Les feuilles de Sprites et les Quads
 - Disposition procédurale des briques
 - Gestion avancée des états
 - Niveaux de jeu
@@ -17,4 +17,7 @@ Pour y jouer, vous devez tout d'abord télécharger le moteur LÖVE2D disponible
 
 https://love2d.org/#download
 
-Vous pouvez maintenant télécharger et lancer le fichier du jeu "Pong.love".
+Vous pouvez maintenant télécharger et lancer le fichier du jeu "Match3.love".
+
+<img src="match3_scrshot_1.png">
+<img src="match3_scrshot_2.png">
